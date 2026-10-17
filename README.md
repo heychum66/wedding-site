@@ -55,7 +55,13 @@ At `/admin`, under **Invitations**:
 3. **Text invite** (on a phone) opens Messages with their number and the invite text filled in; tap send. It's marked as texted. Guests without a phone get **Copy message** instead. **Download with links** gives a CSV of everyone's link for a mail merge.
 4. The text is `inviteText` in `content/site.ts` (`{name}` and `{link}` get filled in).
 
-**Email me this invitation:** guests can type their email on their invite page and the site emails them the invitation (only to the address they type). It stays hidden until `RESEND_API_KEY` and `EMAIL_FROM` are set in Vercel. Resend's free tier covers 3,000 emails a month, but it only sends to anyone once you verify a domain you own.
+**Email me this invitation:** guests can type their email on their invite page and the site emails them the invitation (only to the address they type), sent from your own Gmail so replies come straight to you. To turn it on:
+
+1. Your Google account needs 2-Step Verification on (myaccount.google.com/security).
+2. Go to myaccount.google.com/apppasswords, name it "wedding site", and copy the 16-character password.
+3. In Vercel, add `GMAIL_USER` (your Gmail address) and `GMAIL_APP_PASSWORD` (that password), then redeploy.
+
+Gmail allows about 500 emails a day. To turn it off, delete the app password in your Google account.
 
 ## Custom domain
 

@@ -1,5 +1,6 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
+import nodemailer from "nodemailer";
 import { site } from "@/content/site";
 import { db, type GuestRow } from "@/lib/db";
 
@@ -25,8 +26,11 @@ export function siteUrl(req?: Request) {
 
 export const inviteUrl = (base: string, token: string) => `${base}/?i=${token}#rsvp`;
 
-/** Email goes out through Resend (resend.com). Both settings must be present or the feature stays hidden. */
-export const emailEnabled = () => Boolean(process.env.RESEND_API_KEY && process.env.EMAIL_FROM);
+/**
+ * Email goes out from your own Gmail, using a Google "app password" (not your normal password).
+ * Both settings must be present or the feature stays hidden.
+ */
+export const emailEnabled = () => Boolean(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD);
 
 const esc = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
@@ -64,10 +68,11 @@ export async function sendInviteEmail(to: string, guest: GuestRow, link: string)
 <p style="margin:18px 0 0;font:13px/1.5 Arial,sans-serif;color:#5A6278">Kindly reply ${esc(site.rsvpDeadlineLabel.toLowerCase())}.</p>
 </td></tr></table></td></tr></table></body></html>`;
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from: process.env.EMAIL_FROM, to: [to], subject: `You're invited: ${couple}`, text, html }),
+  const user = process.env.GMAIL_USER!;
+  const mail = nodemailer.createTransport({
+    service: "gmail",
+    // Google shows app passwords with spaces ("abcd efgh ijkl mnop"); either form works.
+    auth: { user, pass: process.env.GMAIL_APP_PASSWORD!.replace(/\s/g, "") },
   });
-  if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text()}`);
+  await mail.sendMail({ from: { name: couple, address: user }, to, subject: `You're invited: ${couple}`, text, html });
 }
