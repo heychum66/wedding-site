@@ -19,8 +19,6 @@ const PIECES: Record<Who, Piece[]> = {
     { k: "dress", b: "Dress", small: "Below the knee: midi, tea-length or floor-length. An elegant jumpsuit or dressy separates work too." },
     { k: "heels", b: "Dress shoes", small: "Heels, block heels or elegant flats." },
     { k: "jewelry", b: "Jewelry", small: "Bring out the good stuff. It's the night for it." },
-    { k: "wrap", b: "A wrap", small: "September nights in Pittsburgh can dip into the 50s." },
-    { k: "clutch", b: "Clutch", small: "Small, evening-ready, room for lipstick and a phone." },
   ],
 };
 const WHO: Who[] = ["him", "her"];
