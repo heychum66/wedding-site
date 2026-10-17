@@ -5,8 +5,8 @@
   --sapphire:#163D8C; --sapphire-deep:#0F2A63; --emerald:#0E5A43; --emerald-deep:#0A4433; --white:#FFFFFF;
   --gold:#9A7628; --gold-deep:#9A7628; --gold-hi:#D9BC74; --rose:#B4452F; --line:rgba(154,118,40,.30);
   --btn-bg:#163D8C; --btn-fg:#FFFFFF;
-  --display:var(--font-garamond),"EB Garamond",Garamond,Georgia,serif;
-  --serif:var(--font-garamond),"EB Garamond",Garamond,Georgia,serif;
+  --display:var(--font-playfair),"Playfair Display",Georgia,serif;
+  --serif:var(--font-playfair),"Playfair Display",Georgia,serif;
   --body:var(--font-hanken),"Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
 }
