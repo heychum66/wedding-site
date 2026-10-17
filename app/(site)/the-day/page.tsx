@@ -28,6 +28,7 @@ export default function TheDay() {
               <address>{ceremony.street}<br />{ceremony.city}, {ceremony.region} {ceremony.zip}</address>
               <p className="area">{ceremony.area}</p>
               <div className="when"><span>Time</span>{ceremony.time}</div>
+              <p className="parking"><b>Parking</b>{ceremony.parking}</p>
               <MapLinks place={ceremony} />
             </li>
             <li className="between" aria-label="Getting there">
@@ -49,6 +50,7 @@ export default function TheDay() {
                   </div>
                 ))}
               </div>
+              <p className="parking"><b>Parking</b>{reception.parking}</p>
               <MapLinks place={reception} />
             </li>
           </ol>

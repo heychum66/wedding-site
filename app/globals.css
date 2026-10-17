@@ -485,7 +485,9 @@ body{margin:0}
 .stops .venue .sched{width:100%;max-width:380px;margin:18px auto 0;text-align:left}
 .stops .venue .row{grid-template-columns:70px 1fr;padding-block:14px}
 .stops .venue .row:last-child{border-bottom:0}
-.stops .venue .maps{margin-top:26px}
+.stops .venue .maps{margin-top:18px}
+.stops .parking{margin:24px auto 0;max-width:34ch;color:var(--ink-soft);font-size:.95rem;line-height:1.5}
+.stops .parking b{display:block;margin-bottom:4px;font:500 .74rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 /* Three equal-width buttons. */
 .maps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:440px;margin-inline:auto}
 .maps .btn{justify-content:center;text-align:center;padding:11px 8px;font-size:.7rem;letter-spacing:.16em;white-space:nowrap}

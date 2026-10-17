@@ -30,6 +30,7 @@ export const site = {
     zip: "15222",
     area: "In the Strip District",
     time: "TBD",
+    parking: "Street parking and pay lots around 21st & Smallman Streets. Spots fill up on Saturdays, so give yourself a few extra minutes.",
   },
   /** Then: cocktails, dinner and dancing. */
   reception: {
@@ -40,6 +41,7 @@ export const site = {
     region: "PA",
     zip: "15235",
     area: "In Churchill, just east of the city",
+    parking: "Free parking in the club's lot.",
     /** Rows on The Day tab. */
     schedule: [
       { t: "TBD", what: "Cocktail hour", note: "Drinks and hors d'oeuvres." },
@@ -48,7 +50,7 @@ export const site = {
     ],
   },
   /** Getting from the church to the club. */
-  between: "About 20 minutes by car, east on the Parkway (I-376). Free parking at Edgewood.",
+  between: "About 20 minutes by car, east on the Parkway (I-376).",
 
   /** RSVPs close at the end of this day (Eastern). The form switches to a "closed" message after. */
   rsvpDeadline: "2027-08-01T23:59:59-04:00",
@@ -85,13 +87,6 @@ export const site = {
       big: "~3 hr",
       small: "from Columbus via I-70",
       body: "Both stops are a short drive apart: the church in the city, Edgewood about 20 minutes east.",
-    },
-    parking: {
-      heading: "Parking",
-      items: [
-        { where: "At the church", what: "Street parking and pay lots around 21st & Smallman. Give yourself a few extra minutes." },
-        { where: "At Edgewood", what: "Free parking at the club." },
-      ],
     },
     weekend: {
       heading: "Make a weekend of it",

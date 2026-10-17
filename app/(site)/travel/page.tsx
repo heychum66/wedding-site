@@ -25,14 +25,16 @@ export default function Travel() {
               <p>{travel.driving.body}</p>
             </div>
             <div className="tcard">
-              <h3>{travel.parking.heading}</h3>
+              <h3>Parking</h3>
               <dl className="facts">
-                {travel.parking.items.map((x) => (
-                  <div key={x.where}>
-                    <dt>{x.where}</dt>
-                    <dd>{x.what}</dd>
-                  </div>
-                ))}
+                <div>
+                  <dt>At the church</dt>
+                  <dd>{site.ceremony.parking}</dd>
+                </div>
+                <div>
+                  <dt>At Edgewood</dt>
+                  <dd>{site.reception.parking}</dd>
+                </div>
               </dl>
             </div>
             <div className="tcard">
