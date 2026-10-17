@@ -13,7 +13,7 @@ export default function RsvpPage() {
       <Spray corner="br" preset="band" tone="light" index={6} />
       <Spray corner="tl" preset="band" tone="light" seed={3} index={7} />
       <div className="wrap">
-        <SectionHead eyebrow={site.rsvpDeadlineLabel}>Kindly <em>reply</em></SectionHead>
+        <SectionHead eyebrow={site.rsvpDeadlineLabel}>Kindly reply</SectionHead>
         <div className="rsvp">
           <div className="pitch">
             <p>Tell us you&apos;re coming, pick your dinner, and request the song that gets you on the dance floor.</p>

@@ -11,7 +11,7 @@ export default function Registry() {
     <>
       <section className="s" id="registry">
         <div className="wrap">
-          <SectionHead eyebrow="If you'd like">The <em>registry</em></SectionHead>
+          <SectionHead eyebrow="If you'd like">The registry</SectionHead>
           <p className="registry-intro">{site.registryNote}</p>
           {registries.length ? (
             <ul className="registries">

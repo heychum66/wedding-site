@@ -10,7 +10,7 @@ export default function Attire() {
     <>
       <section className="s" id="attire">
         <div className="wrap">
-          <SectionHead eyebrow="What to wear">Formal <em>attire</em></SectionHead>
+          <SectionHead eyebrow="What to wear">Formal attire</SectionHead>
           <DressUp />
         </div>
       </section>
