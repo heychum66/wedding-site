@@ -53,7 +53,7 @@ export function siteUrl(req?: Request) {
   return "http://localhost:3000";
 }
 
-export const inviteUrl = (base: string, token: string) => `${base}/?i=${token}#rsvp`;
+export const inviteUrl = (base: string, token: string) => `${base}/rsvp?i=${token}`;
 
 /**
  * Email goes out from your own Gmail, using a Google "app password" (not your normal password).

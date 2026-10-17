@@ -51,7 +51,7 @@ Privacy: the schema turns on **row level security** with no policies, so Supabas
 At `/admin`, under **Invitations**:
 
 1. **Import CSV.** Export your guest spreadsheet as CSV. Columns: `Name` (required, or `First name` + `Last name`), `Phone`, `Email`, `Party size`. Header names are matched loosely ("Cell", "# of guests" work). One row per person or per household. Importing again updates matching names (blank cells never erase saved info), so keep editing the spreadsheet and re-import.
-2. Each guest gets a private link (`/?i=<code>#rsvp`). It opens the site with "Dear <name>", fills in their name and phone, and limits the party to their seats. Their reply is tied to their row, so the list shows who has replied.
+2. Each guest gets a private link (`/rsvp?i=<code>`; older `/?i=<code>` links redirect there). It opens the RSVP tab with "Dear <name>", fills in their name and phone, and limits the party to their seats. Their reply is tied to their row, so the list shows who has replied.
 3. **Text invite** (on a phone) opens Messages with their number and the invite text filled in; tap send. It's marked as texted. Guests without a phone get **Copy message** instead. **Download with links** gives a CSV of everyone's link for a mail merge.
 4. The text is `inviteText` in `content/site.ts` (`{name}` and `{link}` get filled in).
 
@@ -81,7 +81,7 @@ Commit and push; Vercel redeploys.
 
 ## How it fits together
 
-- `app/page.tsx` is the one-page site. Interactive pieces are client components in `components/` (countdown, live panel, dress-up, seat finder, cats, RSVP form, hero bubbles/spotlight). The greenery sprays are generated on the server from a seeded RNG (`lib/greenery.ts`).
+- The guest site is a set of tabs in `app/(site)/`: Home (`page.tsx`), `the-day`, `attire`, `travel`, `faq` and `rsvp`, sharing one layout (nav, cats, footer) in `app/(site)/layout.tsx`. The tab list is `components/SiteNav.tsx`. Interactive pieces are client components in `components/` (countdown, live panel, dress-up, seat finder, cats, RSVP form, hero bubbles/spotlight). The greenery sprays are generated on the server from a seeded RNG (`lib/greenery.ts`).
 - `app/api/rsvp` handles `GET` (your own reply, from the cookie), `POST` (new reply) and `PUT` (edit).
 - `app/api/admin/*` handles login/logout, CSV export and deletes. `proxy.ts` guards `/admin` and `/api/admin/*`.
 - `app/api/calendar.ics` serves the Apple/.ics file. `app/opengraph-image.tsx`, `app/icon.tsx` and `app/apple-icon.tsx` draw the link preview and favicons.
