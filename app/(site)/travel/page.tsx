@@ -59,7 +59,7 @@ export default function Travel() {
           </div>
         </div>
       </section>
-      <NextTab href="/faq" label="Questions" />
+      <NextTab href="/registry" label="Registry" />
     </>
   );
 }

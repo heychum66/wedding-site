@@ -44,7 +44,7 @@ nav ul a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
 /* Phones: the tabs drop to their own row under the logo and scroll sideways if they don't fit. */
 @media (max-width:760px){
   nav .wrap{flex-wrap:wrap;row-gap:4px;padding-block:10px 0}
-  nav ul{order:3;width:100%;gap:22px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;letter-spacing:.2em;justify-content:space-between}
+  nav ul{order:3;width:100%;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;font-size:.7rem;letter-spacing:.1em;justify-content:space-between}
   nav ul::-webkit-scrollbar{display:none}
   nav ul a{padding-block:10px 9px;white-space:nowrap}
 }
@@ -514,3 +514,12 @@ body{margin:0}
 .weekend h3{font:500 .8rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;text-align:center}
 @media (max-width:520px){.maps{gap:6px}.maps .btn{padding:10px 4px;font-size:.62rem;letter-spacing:.08em}}
 @media (max-width:360px){.maps{grid-template-columns:1fr;max-width:220px}}
+
+/* ===== registry ===== */
+.registry-intro{max-width:52ch;margin:0 auto 34px;text-align:center;color:var(--ink-soft);font:italic 400 1.25rem/1.5 var(--display)}
+.registries{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:900px}
+.registries .tcard,.registries-soon{display:grid;gap:10px;justify-items:center;text-align:center;padding:32px 26px}
+.registries h3,.registries-soon h3{font:400 1.8rem/1.1 var(--display);margin:0}
+.registries .btn{margin-top:8px}
+.registries-soon{max-width:460px;margin:0 auto}
+.registries-soon h3{font-style:italic;color:var(--gold)}

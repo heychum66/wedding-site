@@ -72,8 +72,11 @@ export const site = {
   /** null shows "coming soon". Fill in like: { name: "Hotel Name", url: "https://…", code: "EVANREMY", bookBy: "August 15" } */
   hotelBlock: null as null | { name: string; url: string; code?: string; bookBy?: string },
 
-  /** null shows "coming soon". */
-  registryUrl: null as null | string,
+  /**
+   * Shown on the Registry tab, one card each. Empty shows "coming soon". Fill in like:
+   * { name: "Zola", url: "https://www.zola.com/registry/…", note: "Home goods and a honeymoon fund" }
+   */
+  registries: [] as { name: string; url: string; note?: string }[],
 
   travel: {
     flying: {
@@ -113,13 +116,13 @@ export const faq: Faq[] = [
     a: "Your invitation will list everyone we've saved a seat for. If you're unsure, just ask us.",
   },
   { q: "Are kids welcome?", a: "Details coming soon. Check your invitation." },
-  site.registryUrl
-    ? {
-        q: "Is there a registry?",
-        a: "Yes. Honestly, you showing up is the gift.",
-        link: { href: site.registryUrl, label: "Open the registry" },
-      }
-    : { q: "Is there a registry?", a: "Yes, link coming soon. Honestly, you showing up is the gift." },
+  {
+    q: "Is there a registry?",
+    a: site.registries.length
+      ? "Yes, it's on the Registry tab. Honestly, you showing up is the gift."
+      : "Yes, it'll be on the Registry tab soon. Honestly, you showing up is the gift.",
+    link: { href: "/registry", label: "Go to the registry" },
+  },
   {
     q: "Where should I stay?",
     a: "We're setting up a hotel block. The link will be on the Travel tab.",
