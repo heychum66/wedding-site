@@ -77,6 +77,9 @@ export const site = {
    * { name: "Zola", url: "https://www.zola.com/registry/…", note: "Home goods and a honeymoon fund" }
    */
   registries: [] as { name: string; url: string; note?: string }[],
+  /** The note at the top of the Registry tab. */
+  registryNote:
+    "Between the two of us (and three cats), our home is officially full. Your presence is truly all we want, but if you'd like to celebrate with a gift, we'd love help making memories instead: our honeymoon, a few special dinners, and the trips we've always talked about.",
 
   travel: {
     flying: {
