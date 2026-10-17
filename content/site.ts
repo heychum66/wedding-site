@@ -124,6 +124,10 @@ export const faq: Faq[] = [
     link: { href: "/registry", label: "Go to the registry" },
   },
   {
+    q: "Will there be a bar?",
+    a: "Yes, an open bar at the reception. Please drink responsibly and plan a safe ride home.",
+  },
+  {
     q: "Where should I stay?",
     a: "We're setting up a hotel block. The link will be on the Travel tab.",
   },
