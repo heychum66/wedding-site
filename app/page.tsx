@@ -19,6 +19,8 @@ const dateLong = new Date(`${site.date}T12:00:00`).toLocaleDateString("en-US", {
   day: "numeric",
   year: "numeric",
 });
+const dateFull = new Date(`${site.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+const weekday = new Date(`${site.date}T12:00:00`).toLocaleDateString("en-US", { weekday: "long" });
 const dateShort = new Date(`${site.date}T12:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric" });
 
 export default function Home() {
@@ -57,7 +59,7 @@ export default function Home() {
           <div className="rule"><i /></div>
           <p className="lead">request the pleasure of your company at their wedding</p>
           <div className="datebox">
-            IX · XVIII · MMXXVII<small>{dateLong} · {venue.name} · {venue.city}</small>
+            {dateFull}<small><span>{weekday}</span><i> · </i><span>{venue.name}</span><i> · </i><span>{venue.city}</span></small>
           </div>
           <div className="attire">Black tie</div>
           <div className="cal">
