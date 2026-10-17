@@ -10,7 +10,7 @@ import LivePanel from "@/components/LivePanel";
 import Names from "@/components/Names";
 import Spray from "@/components/Spray";
 
-const { names, venue } = site;
+const { names } = site;
 
 const CALENDARS = [
   { label: "Apple Calendar", href: "/api/calendar.ics", download: "evan-and-remy.ics" },
@@ -44,7 +44,7 @@ export default function Home() {
           <div className="rule"><i /></div>
           <p className="lead">request the pleasure of your company at their wedding</p>
           <div className="datebox">
-            {dateFull}<small><span>{weekday}</span><i> · </i><span>{venue.name}</span><i> · </i><span>{venue.city}</span></small>
+            {dateFull}<small><span>{weekday}</span><i> · </i><span>Pittsburgh, Pennsylvania</span></small>
           </div>
           <AddToCalendar options={CALENDARS} />
         </div>

@@ -14,15 +14,29 @@ export default function Travel() {
         <div className="wrap">
           <SectionHead eyebrow="Getting to Pittsburgh">Travel <em>&amp; stays</em></SectionHead>
           <div className="travel">
-            <div>
+            <div className="tcard">
               <h3>{travel.flying.heading}</h3>
               <div className="dist">{travel.flying.big}<small>{travel.flying.small}</small></div>
               <p>{travel.flying.body}</p>
             </div>
-            <div>
+            <div className="tcard">
               <h3>{travel.driving.heading}</h3>
               <div className="dist">{travel.driving.big}<small>{travel.driving.small}</small></div>
               <p>{travel.driving.body}</p>
+            </div>
+            <div className="tcard">
+              <h3>{travel.parking.heading}</h3>
+              <dl className="facts">
+                {travel.parking.items.map((x) => (
+                  <div key={x.where}>
+                    <dt>{x.where}</dt>
+                    <dd>{x.what}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="tcard">
+              <h3>Where to stay</h3>
               {hotelBlock ? (
                 <p>
                   <b>Hotel block:</b>{" "}
@@ -31,15 +45,15 @@ export default function Travel() {
                   {hotelBlock.bookBy ? `. Book by ${hotelBlock.bookBy}.` : "."}
                 </p>
               ) : (
-                <p><b>Hotel block:</b> coming soon. We&apos;ll post the link and booking code here.</p>
+                <p>We&apos;re setting up a hotel block. The link and booking code will be posted here.</p>
               )}
             </div>
-            <div>
-              <h3>{travel.weekend.heading}</h3>
-              <ul className="todo-list">
-                {travel.weekend.items.map((t) => <li key={t}>{t}</li>)}
-              </ul>
-            </div>
+          </div>
+          <div className="weekend">
+            <h3>{travel.weekend.heading}</h3>
+            <ul className="todo-list">
+              {travel.weekend.items.map((t) => <li key={t}>{t}</li>)}
+            </ul>
           </div>
         </div>
       </section>

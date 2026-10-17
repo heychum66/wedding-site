@@ -72,7 +72,7 @@ export async function sendInviteEmail(to: string, guest: GuestRow, link: string)
     day: "numeric",
     year: "numeric",
   });
-  const where = `${site.venue.name} · ${site.venue.city}, ${site.venue.region}`;
+  const where = `${site.ceremony.name}, then ${site.reception.name} · ${site.ceremony.city}, ${site.ceremony.region}`;
   const text = [
     `Dear ${guest.name},`,
     "",

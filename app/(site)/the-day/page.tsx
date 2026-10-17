@@ -10,7 +10,7 @@ import Spray from "@/components/Spray";
 
 export const metadata: Metadata = { title: "The Day · Evan & Remy" };
 
-const { venue } = site;
+const { ceremony, reception } = site;
 
 export default function TheDay() {
   return (
@@ -18,27 +18,42 @@ export default function TheDay() {
       <section className="s" id="details">
         <div className="wrap">
           <SectionHead eyebrow={dateLong}>The <em>day</em></SectionHead>
-          <div className="details">
-            <div className="venue">
+          <ol className="stops">
+            <li className="venue">
               <Spray corner="tl" preset="card" index={4} />
               <Spray corner="tr" preset="card" seed={5} index={5} />
-              <span className="eyebrow">Ceremony &amp; reception</span>
-              <h3>{venue.name}</h3>
-              <address>{venue.street}<br />{venue.city}, {venue.region} {venue.zip}</address>
-              <p style={{ color: "var(--ink-soft)", maxWidth: "42ch" }}>Ceremony, dinner and dancing, all under one roof.</p>
-              <div className="stamp">Formal attire</div>
-              <div className="acts" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
-                <a className="btn" href={venue.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
-                <Link className="btn ghost" href="/rsvp">RSVP</Link>
+              <span className="eyebrow">First · {ceremony.label}</span>
+              <h3>{ceremony.name}</h3>
+              <address>{ceremony.street}<br />{ceremony.city}, {ceremony.region} {ceremony.zip}</address>
+              <p className="area">{ceremony.area}</p>
+              <div className="when"><span>Time</span>{ceremony.time}</div>
+              <a className="btn" href={ceremony.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
+            </li>
+            <li className="between" aria-label="Getting there">
+              <span className="dot" aria-hidden="true" />
+              <p>{site.between}</p>
+            </li>
+            <li className="venue">
+              <Spray corner="tl" preset="card" seed={2} index={10} />
+              <Spray corner="tr" preset="card" seed={13} index={11} />
+              <span className="eyebrow">Then · {reception.label}</span>
+              <h3>{reception.name}</h3>
+              <address>{reception.street}<br />{reception.city}, {reception.region} {reception.zip}</address>
+              <p className="area">{reception.area}</p>
+              <div className="sched">
+                {reception.schedule.map((r) => (
+                  <div className="row" key={r.what}>
+                    <div className="t">{r.t}</div>
+                    <div><b>{r.what}</b><span>{r.note}</span></div>
+                  </div>
+                ))}
               </div>
-            </div>
-            <div className="sched">
-              <div className="row"><div className="t">TBD</div><div><b>Ceremony</b><span>Times go out with the formal invitation.</span></div></div>
-              <div className="row"><div className="t">TBD</div><div><b>Cocktail hour</b><span>Cocktails and hors d&apos;oeuvres.</span></div></div>
-              <div className="row"><div className="t">TBD</div><div><b>Dinner &amp; dancing</b><span>An evening of dinner, champagne and dancing.</span></div></div>
-              <div className="row"><div className="t">Late</div><div><b>Last call</b><span>We&apos;ll be on the dance floor.</span></div></div>
-              <LiveOpenButton />
-            </div>
+              <a className="btn" href={reception.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
+            </li>
+          </ol>
+          <div className="day-foot">
+            <Link className="btn ghost" href="/rsvp">RSVP</Link>
+            <LiveOpenButton />
           </div>
         </div>
       </section>
