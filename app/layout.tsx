@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { EB_Garamond, Hanken_Grotesk } from "next/font/google";
+import { Hanken_Grotesk, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const garamond = EB_Garamond({
+const playfair = Playfair_Display({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  variable: "--font-garamond",
+  variable: "--font-playfair",
   display: "swap",
 });
 
@@ -38,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${garamond.variable} ${hanken.variable}`}>
+    <html lang="en" className={`${playfair.variable} ${hanken.variable}`}>
       <body>
         <noscript>
           <style>{`.spray.wait .lf,.spray.wait .bry{transform:none}.spray.wait .stem{stroke-dashoffset:0}`}</style>
