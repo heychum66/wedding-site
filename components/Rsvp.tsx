@@ -9,6 +9,7 @@ type Reply = {
   meal: string | null;
   song: string | null;
   note: string | null;
+  plus_one_name?: string | null;
   phone: string | null;
   address_street: string | null;
   address_city: string | null;
@@ -16,7 +17,7 @@ type Reply = {
   address_zip: string | null;
 };
 
-type Guest = { name: string; party_size: number; phone: string | null };
+type Guest = { name: string; party_size: number; phone: string | null; plus_one_allowed?: boolean; plus_one?: boolean | null };
 
 type Props = {
   meals: string[];
@@ -38,6 +39,7 @@ const blank = (meals: string[]) => ({
   zip: "",
   song: "",
   note: "",
+  plusName: "",
   website: "",
 });
 
@@ -66,7 +68,9 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
           setInvite(code);
           setGuest(g);
           setCanEmail(Boolean(d.email));
-          setF((s) => ({ ...s, name: g.name, party: String(g.party_size), phone: g.phone ?? "" }));
+          // Plus-one invites start at "Just me" unless you've already marked them as bringing someone.
+          const party = g.plus_one_allowed && g.party_size === 2 ? (g.plus_one ? "2" : "1") : String(g.party_size);
+          setF((s) => ({ ...s, name: g.name, party, phone: g.phone ?? "" }));
         }
         if (!d?.reply) return;
         const r = d.reply;
@@ -85,6 +89,7 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
           zip: r.address_zip ?? "",
           song: r.song ?? "",
           note: r.note ?? "",
+          plusName: r.plus_one_name ?? "",
         }));
       })
       .catch(() => {});
@@ -113,6 +118,7 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
       address_zip: f.zip.trim(),
       song: f.song.trim().slice(0, 140),
       note: f.note.trim().slice(0, 600),
+      plus_one_name: yes && Number(f.party) > 1 ? f.plusName.trim().slice(0, 120) : "",
       website: f.website,
       ...(invite ? { invite } : {}),
     };
@@ -149,6 +155,9 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
   }
 
   const seats = guest ? Math.min(guest.party_size, maxParty) : maxParty;
+  // A one-person invite with a plus-one gets a yes/no instead of a party count; a solo invite gets neither.
+  const plusMode = Boolean(guest?.plus_one_allowed) && seats === 2;
+  const solo = Boolean(guest) && seats === 1;
   const greeting = guest && (
     <div className="invite-hi">
       <span className="eyebrow">Your invitation</span>
@@ -168,7 +177,7 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
         <h3>{saved.attending ? "You're on the list" : "We'll miss you"}</h3>
         <p style={{ margin: 0 }}>
           {saved.attending
-            ? `Party of ${saved.party_size}, ${(saved.meal ?? "").toLowerCase()} for dinner. See you ${dateLabel}.`
+            ? `${saved.plus_one_name ? `You and ${saved.plus_one_name}` : `Party of ${saved.party_size}`}, ${(saved.meal ?? "").toLowerCase()} for dinner. See you ${dateLabel}.`
             : "Thanks for letting us know. We'll raise a glass for you."}
         </p>
         {!closed && (
@@ -211,14 +220,24 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
         </div>
       </fieldset>
       <div className="two" hidden={f.att !== "yes"}>
-        <div className="f">
-          <label htmlFor="r-count">Number in your party</label>
-          <select id="r-count" value={f.party} onChange={set("party")}>
-            {Array.from({ length: seats }, (_, i) => (
-              <option key={i}>{i + 1}</option>
-            ))}
-          </select>
-        </div>
+        {plusMode ? (
+          <div className="f">
+            <label htmlFor="r-count">Bringing a plus-one?</label>
+            <select id="r-count" value={f.party === "2" ? "2" : "1"} onChange={set("party")}>
+              <option value="1">Just me</option>
+              <option value="2">Yes, me + one</option>
+            </select>
+          </div>
+        ) : solo ? null : (
+          <div className="f">
+            <label htmlFor="r-count">Number in your party</label>
+            <select id="r-count" value={f.party} onChange={set("party")}>
+              {Array.from({ length: seats }, (_, i) => (
+                <option key={i}>{i + 1}</option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="f">
           <label htmlFor="r-meal">Dinner</label>
           <select id="r-meal" value={f.meal} onChange={set("meal")}>
@@ -228,6 +247,12 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
           </select>
         </div>
       </div>
+      {plusMode && f.att === "yes" && f.party === "2" && (
+        <div className="f">
+          <label htmlFor="r-plus">Your plus-one&apos;s name (optional)</label>
+          <input id="r-plus" placeholder="So we can save them a place card" value={f.plusName} onChange={set("plusName")} maxLength={120} />
+        </div>
+      )}
       <div className="f">
         <label htmlFor="r-phone">Phone{opt}</label>
         <input id="r-phone" type="tel" autoComplete="tel" placeholder="For day-of updates" value={f.phone} onChange={set("phone")} maxLength={40} required={req} />

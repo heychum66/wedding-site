@@ -7,16 +7,23 @@ export type GuestListRow = {
   id: string;
   invite_token: string;
   name: string;
+  first_name: string | null;
   party_size: number;
   phone: string | null;
   email: string | null;
+  plus_one_allowed: boolean;
+  plus_one: boolean | null;
+  plus_one_name: string | null;
+  side: string | null;
   texted_at: string | null;
   attending: boolean | null;
   replied_party: number | null;
 };
 
 /** A blank spreadsheet with the columns the import understands. */
-const TEMPLATE = "data:text/csv;charset=utf-8," + encodeURIComponent("Name,Phone,Email,Party size\r\n");
+const TEMPLATE = "data:text/csv;charset=utf-8," + encodeURIComponent(
+  "First name,Last name,Phone,Email,Plus-one allowed,Bringing plus-one,Side\r\n",
+);
 
 type Filter = "all" | "unsent" | "waiting" | "replied";
 
@@ -39,6 +46,7 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
   const [rows, setRows] = useState(guests);
   const [prev, setPrev] = useState(guests);
   const [filter, setFilter] = useState<Filter>("all");
+  const [side, setSide] = useState<string | null>(null);
   const [confirming, setConfirming] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [status, setStatus] = useState({ text: "", err: false });
@@ -53,11 +61,14 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
   // Links use the address you're on (the server render has none, so they fill in after load).
   const origin = useSyncExternalStore(noSubscribe, browserOrigin, () => "");
   const link = (g: GuestListRow) => `${origin}/?i=${g.invite_token}#rsvp`;
-  const message = (g: GuestListRow) => inviteText.replaceAll("{name}", g.name).replaceAll("{link}", link(g));
+  const message = (g: GuestListRow) =>
+    inviteText.replaceAll("{first}", g.first_name || g.name).replaceAll("{name}", g.name).replaceAll("{link}", link(g));
 
   const replied = rows.filter((g) => g.attending != null);
   const seats = rows.reduce((a, g) => a + g.party_size, 0);
-  const shown = rows.filter((g) =>
+  const sides = [...new Set(rows.map((g) => g.side).filter((x): x is string => Boolean(x)))].sort();
+  const bringing = rows.filter((g) => g.plus_one).length;
+  const shown = rows.filter((g) => !side || g.side === side).filter((g) =>
     filter === "unsent" ? !g.texted_at : filter === "waiting" ? g.attending == null : filter === "replied" ? g.attending != null : true,
   );
 
@@ -122,16 +133,18 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
         </div>
       </div>
       <p className="hint">
-        Spreadsheet columns: <b>Name</b> (required), <b>Phone</b>, <b>Email</b>, <b>Party size</b>. One row per person or per
-        household. Importing again updates matching names instead of adding duplicates.
+        One row per guest: <b>First name</b>, <b>Last name</b>, <b>Phone</b>, <b>Email</b>, <b>Plus-one allowed</b> (yes/no),{" "}
+        <b>Bringing plus-one</b> (yes/no, or leave blank and their RSVP fills it in), <b>Side</b> (Evan, Remy or Both). Only the
+        name is required. Importing again updates matching names instead of adding duplicates.
       </p>
       <p className={"status" + (status.err ? " err" : "")} role="status">{status.text}</p>
 
       {rows.length > 0 && (
         <>
           <div className="totals">
-            <div>{rows.length}<small>Invitations</small></div>
-            <div>{seats}<small>Seats</small></div>
+            <div>{rows.length}<small>Guests</small></div>
+            <div>{bringing}<small>Bringing a plus-one</small></div>
+            <div>{seats}<small>Seats offered</small></div>
             <div>{rows.filter((g) => g.texted_at).length}<small>Texted</small></div>
             <div>{replied.length}<small>Replied</small></div>
           </div>
@@ -145,6 +158,16 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
               <button key={k} type="button" aria-pressed={filter === k} onClick={() => setFilter(k)}>{label}</button>
             ))}
           </div>
+          {sides.length > 0 && (
+            <div className="filters" role="group" aria-label="Side">
+              <button type="button" aria-pressed={!side} onClick={() => setSide(null)}>All sides</button>
+              {sides.map((x) => (
+                <button key={x} type="button" aria-pressed={side === x} onClick={() => setSide(x)}>
+                  {x === "Both" ? "Both" : `${x}'s side`} · {rows.filter((g) => g.side === x).length}
+                </button>
+              ))}
+            </div>
+          )}
         </>
       )}
 
@@ -153,8 +176,9 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
           <thead>
             <tr>
               <th>Name</th>
-              <th>Seats</th>
+              <th>Side</th>
               <th>Phone</th>
+              <th>Plus-one</th>
               <th>Reply</th>
               <th>Texted</th>
               <th><span className="sr-only">Actions</span></th>
@@ -162,16 +186,28 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
           </thead>
           <tbody>
             {!rows.length && (
-              <tr><td colSpan={6} style={{ opacity: 0.7 }}>No one here yet. Import your guest spreadsheet to get everyone&apos;s invite links.</td></tr>
+              <tr><td colSpan={7} style={{ opacity: 0.7 }}>No one here yet. Import your guest spreadsheet to get everyone&apos;s invite links.</td></tr>
             )}
             {rows.length > 0 && !shown.length && (
-              <tr><td colSpan={6} style={{ opacity: 0.7 }}>Nobody in this group.</td></tr>
+              <tr><td colSpan={7} style={{ opacity: 0.7 }}>Nobody in this group.</td></tr>
             )}
             {shown.map((g) => (
               <tr key={g.id}>
                 <td><b>{g.name}</b>{g.email && <small>{g.email}</small>}</td>
-                <td>{g.party_size}</td>
+                <td>{g.side || "–"}</td>
                 <td>{g.phone || "–"}</td>
+                <td>
+                  {!g.plus_one_allowed ? (
+                    "–"
+                  ) : g.plus_one == null ? (
+                    <span className="pill w">Allowed</span>
+                  ) : g.plus_one ? (
+                    <span className="pill y">Bringing</span>
+                  ) : (
+                    <span className="pill n">Not bringing</span>
+                  )}
+                  {g.plus_one_name && <small>{g.plus_one_name}</small>}
+                </td>
                 <td>
                   {g.attending == null ? (
                     <span className="pill w">Waiting</span>

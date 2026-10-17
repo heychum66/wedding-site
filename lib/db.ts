@@ -34,6 +34,7 @@ export type RsvpRow = {
   address_state: string | null;
   address_zip: string | null;
   guest_id: string | null;
+  plus_one_name: string | null;
   created_at: Date;
   updated_at: Date;
 };
@@ -42,9 +43,14 @@ export type GuestRow = {
   id: string;
   invite_token: string;
   name: string;
+  first_name: string | null;
+  last_name: string | null;
   party_size: number;
   phone: string | null;
   email: string | null;
+  plus_one_allowed: boolean;
+  plus_one: boolean | null;
+  side: string | null;
   texted_at: Date | null;
   emailed_at: Date | null;
   created_at: Date;
