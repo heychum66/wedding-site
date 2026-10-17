@@ -8,15 +8,16 @@ type Piece = { k: string; b: string; small: string };
 
 const PIECES: Record<Who, Piece[]> = {
   him: [
-    { k: "trousers", b: "Tuxedo trousers", small: "Match the jacket, with a satin stripe down the side." },
-    { k: "shirt", b: "Dress shirt", small: "Crisp white, turndown or wing collar." },
-    { k: "jacket", b: "Tuxedo jacket", small: "Black or midnight navy, satin lapels." },
-    { k: "bowtie", b: "Bow tie", small: "Black silk. Self-tie if you're feeling brave." },
-    { k: "square", b: "Pocket square", small: "White linen, or a touch of gold." },
-    { k: "shoes", b: "Shoes", small: "Black patent leather or high-polish oxfords." },
+    { k: "trousers", b: "Suit trousers", small: "Tailored, matching the jacket." },
+    { k: "shirt", b: "Dress shirt", small: "Crisp and pressed. White or a light color." },
+    { k: "tie", b: "Tie", small: "A necktie or a bow tie, your call." },
+    { k: "jacket", b: "Suit jacket", small: "Navy, charcoal, black, or another dark tone." },
+    { k: "square", b: "Pocket square", small: "Optional, but a nice touch." },
+    { k: "shoes", b: "Dress shoes", small: "Polished leather, please. No sneakers." },
   ],
   her: [
-    { k: "gown", b: "Evening gown", small: "Floor-length is classic. An elegant formal dress works too." },
+    { k: "dress", b: "Dress", small: "Below the knee: midi, tea-length or floor-length. An elegant jumpsuit or dressy separates work too." },
+    { k: "heels", b: "Dress shoes", small: "Heels, block heels or elegant flats." },
     { k: "jewelry", b: "Jewelry", small: "Bring out the good stuff. It's the night for it." },
     { k: "wrap", b: "A wrap", small: "September nights in Pittsburgh can dip into the 50s." },
     { k: "clutch", b: "Clutch", small: "Small, evening-ready, room for lipstick and a phone." },
@@ -29,7 +30,7 @@ const allOn = (): Record<Who, Record<string, boolean>> => ({
 });
 const dressedMarkup = (s: string) => s.replace(/ off"/g, '"');
 
-/** Black tie guide: two figures dress piece by piece when the section scrolls in. */
+/** Formal attire guide: two figures dress piece by piece when the section scrolls in. */
 export default function DressUp() {
   const [on, setOn] = useState(allOn);
   const figs = { him: useRef<SVGSVGElement>(null), her: useRef<SVGSVGElement>(null) };
@@ -70,7 +71,7 @@ export default function DressUp() {
     }
     setOn(none);
     for (const w of WHO)
-      PIECES[w].forEach((p, i) => timers.current.push(setTimeout(() => setPiece(w, p.k, true), 500 + i * 650 + (w === "her" ? 250 : 0))));
+      PIECES[w].forEach((p, i) => timers.current.push(setTimeout(() => setPiece(w, p.k, true), 350 + i * 520 + (w === "her" ? 260 : 0))));
   }
 
   // The sequence plays when the section first comes into view.
@@ -129,8 +130,8 @@ export default function DressUp() {
   return (
     <>
       <div className="dress">
-        {card("him", HIM_SVG, "A figure being dressed in a tuxedo", "For him", "Tuxedo, please")}
-        {card("her", HER_SVG, "A figure being dressed in an evening gown", "For her", "Gown or formal dress")}
+        {card("him", HIM_SVG, "A figure being dressed in a suit and tie", "For him", "Suit and tie")}
+        {card("her", HER_SVG, "A figure being dressed in a below-the-knee dress", "For her", "Below-the-knee dress")}
       </div>
       <div className="dress-foot">
         <p>Tap any piece to take it on or off. Please skip white and ivory. That one&apos;s spoken for.</p>

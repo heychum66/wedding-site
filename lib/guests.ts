@@ -51,7 +51,7 @@ export async function sendInviteEmail(to: string, guest: GuestRow, link: string)
     "",
     dateLong,
     where,
-    "Black tie",
+    "Formal attire",
     "",
     `Kindly reply ${site.rsvpDeadlineLabel.toLowerCase()}:`,
     link,
@@ -63,7 +63,7 @@ export async function sendInviteEmail(to: string, guest: GuestRow, link: string)
 <h1 style="margin:0;font-weight:400;font-size:40px;line-height:1.1">${esc(names.first)} <i style="color:#9A7628">&amp;</i> ${esc(names.second)}</h1>
 <p style="margin:18px 0 26px;font-style:italic;font-size:18px;color:#5A6278">request the pleasure of your company at their wedding</p>
 <p style="margin:0;font-size:20px">${esc(dateLong)}</p>
-<p style="margin:6px 0 0;font-size:16px;color:#5A6278">${esc(where)} · Black tie</p>
+<p style="margin:6px 0 0;font-size:16px;color:#5A6278">${esc(where)} · Formal attire</p>
 <p style="margin:32px 0 0"><a href="${esc(link)}" style="display:inline-block;background:#163D8C;color:#FFFFFF;text-decoration:none;padding:14px 30px;font:bold 12px Arial,sans-serif;letter-spacing:3px;text-transform:uppercase">RSVP</a></p>
 <p style="margin:18px 0 0;font:13px/1.5 Arial,sans-serif;color:#5A6278">Kindly reply ${esc(site.rsvpDeadlineLabel.toLowerCase())}.</p>
 </td></tr></table></td></tr></table></body></html>`;
