@@ -181,7 +181,8 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .76rem var(--body);lette
 .rule + .lead, .names + .rule{}
 .names + .rule::before,.names + .rule::after{animation-delay:1.5s}
 .names + .rule i{animation-delay:1.4s}
-.names .w{display:inline-block;overflow:hidden;padding-inline:.04em;margin-inline:-.04em;vertical-align:top}
+/* Bottom padding keeps descenders (the y) inside the clip; the negative margin keeps spacing unchanged. */
+.names .w{display:inline-block;overflow:hidden;padding:0 .04em .25em;margin:0 -.04em -.25em;vertical-align:top}
 .names .ch{display:inline-block;animation:rise 1.1s cubic-bezier(.2,.8,.2,1) both}
 .names .amp{animation:ampin 1.2s cubic-bezier(.2,.8,.2,1) .95s both}
 .names .w.shine{background:linear-gradient(100deg,var(--sapphire-deep) 40%,#3D72D6 47%,#C9A450 50%,#3D72D6 53%,var(--sapphire-deep) 60%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s ease-in-out infinite}
