@@ -333,12 +333,12 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .7rem var(--body);letter
 #cats .run{bottom:env(safe-area-inset-bottom,0px);left:0;width:clamp(120px,14vw,160px)}
 #cats .run.fat{width:clamp(132px,15.5vw,176px)}
 #cats .run svg{display:block;overflow:visible}
-#cats .run .bob{animation:bob .3s ease-in-out infinite alternate}
-#cats .run.fat .bob{animation-duration:.42s}
+#cats .run .bob{animation:bob .45s ease-in-out infinite alternate}
+#cats .run.fat .bob{animation-duration:.6s}
 #cats .run .lg1,#cats .run .lg2{transform-box:fill-box;transform-origin:50% 0}
-#cats .run .lg1{animation:stride .3s ease-in-out infinite alternate}
-#cats .run .lg2{animation:stride .3s ease-in-out infinite alternate-reverse}
-#cats .run.fat .lg1,#cats .run.fat .lg2{animation-duration:.42s}
+#cats .run .lg1{animation:stride .45s ease-in-out infinite alternate}
+#cats .run .lg2{animation:stride .45s ease-in-out infinite alternate-reverse}
+#cats .run.fat .lg1,#cats .run.fat .lg2{animation-duration:.6s}
 #cats .run .tail{transform-box:fill-box;transform-origin:100% 100%;animation:tail .6s ease-in-out infinite alternate}
 @keyframes bob{from{transform:translateY(0)}to{transform:translateY(-5px)}}
 @keyframes stride{from{transform:rotate(-32deg)}to{transform:rotate(32deg)}}

@@ -85,7 +85,7 @@ function runner(c: Cat){
 }
 
 const FIRST_PEEK_MS = 6500;
-const pickDelay = () => 15000 + Math.random() * 20000; // every 15–35s
+const pickDelay = () => 10000 + Math.random() * 15000; // every 10–25s
 
 /** Every so often one cat peeks in from an edge or runs across the bottom. Tap to hurry it along. */
 export default function Cats() {
@@ -114,8 +114,8 @@ export default function Cats() {
         on = `translateX(${sgn * 34}%) rotate(${rot}deg)`;
       }
       stage.appendChild(el);
-      const a = el.animate([{ transform: off }, { transform: on, offset: 0.16 }, { transform: on, offset: 0.84 }, { transform: off }], {
-        duration: 3400,
+      const a = el.animate([{ transform: off }, { transform: on, offset: 0.07 }, { transform: on, offset: 0.93 }, { transform: off }], {
+        duration: 9000,
         easing: "cubic-bezier(.3,1.2,.5,1)",
         fill: "forwards",
       });
@@ -132,7 +132,7 @@ export default function Cats() {
       if (!ltr) el.querySelector("svg")!.style.transform = "scaleX(-1)";
       const from = ltr ? -w - 20 : vw + 20, to = ltr ? vw + 20 : -w - 20;
       const a = el.animate([{ transform: `translateX(${from}px)` }, { transform: `translateX(${to}px)` }], {
-        duration: (c.fat ? 5200 : 3300) * Math.max(0.7, Math.min(1.4, vw / 1200)),
+        duration: (c.fat ? 10000 : 7000) * Math.max(0.7, Math.min(1.4, vw / 1200)),
         easing: "linear",
         fill: "forwards",
       });
