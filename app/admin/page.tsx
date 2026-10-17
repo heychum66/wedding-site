@@ -4,21 +4,45 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { site } from "@/content/site";
 import { ADMIN_COOKIE, verifyAdminToken } from "@/lib/admin-auth";
-import { db, type RsvpRow } from "@/lib/db";
+import { db, type GuestRow, type RsvpRow } from "@/lib/db";
 import AdminDashboard, { type AdminRow } from "@/components/AdminDashboard";
+import AdminGuests, { type GuestListRow } from "@/components/AdminGuests";
 
 export const metadata: Metadata = { title: "Guest list · Evan & Remy", robots: { index: false, follow: false } };
 
 async function GuestList() {
   // proxy.ts already guards /admin; checking again keeps the page safe on its own.
   if (!(await verifyAdminToken((await cookies()).get(ADMIN_COOKIE)?.value))) redirect("/admin/login");
-  const rows = await db()<RsvpRow[]>`select * from rsvps order by updated_at desc`;
+  const sql = db();
+  const [rows, guests] = await Promise.all([
+    sql<RsvpRow[]>`select * from rsvps order by updated_at desc`,
+    sql<(GuestRow & { attending: boolean | null; replied_party: number | null })[]>`
+      select g.*, r.attending, r.party_size as replied_party
+      from guests g left join rsvps r on r.guest_id = g.id
+      order by g.name`,
+  ]);
   const data: AdminRow[] = rows.map((r) => ({
     ...r,
     created_at: r.created_at.toISOString(),
     updated_at: r.updated_at.toISOString(),
   }));
-  return <AdminDashboard rows={data} meals={site.meals} />;
+  const invites: GuestListRow[] = guests.map((g) => ({
+    id: g.id,
+    invite_token: g.invite_token,
+    name: g.name,
+    party_size: g.party_size,
+    phone: g.phone,
+    email: g.email,
+    texted_at: g.texted_at?.toISOString() ?? null,
+    attending: g.attending,
+    replied_party: g.replied_party,
+  }));
+  return (
+    <>
+      <AdminDashboard rows={data} meals={site.meals} />
+      <AdminGuests guests={invites} inviteText={site.inviteText} />
+    </>
+  );
 }
 
 export default function AdminPage() {

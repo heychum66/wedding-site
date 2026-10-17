@@ -30,6 +30,8 @@ export const rsvpSchema = z
     address_city: contact(100, "Add your city."),
     address_state: contact(60, "Add your state."),
     address_zip: contact(20, "Add your ZIP code."),
+    /** The code from a personal invite link (/?i=…), when the guest came from one. */
+    invite: z.string().max(40).optional(),
     /** Honeypot. Real people never see this field. */
     website: z.string().optional(),
   })

@@ -37,8 +37,29 @@ create table if not exists rsvp_attempts (
 
 create index if not exists rsvp_attempts_ip_idx on rsvp_attempts (ip, created_at desc);
 
+-- The invite list, imported from a CSV at /admin. Each row is one invitation
+-- (a person or a household) with its own private link: /?i=<invite_token>.
+create table if not exists guests (
+  id           uuid primary key default gen_random_uuid(),
+  invite_token text unique not null,
+  name         text not null,
+  party_size   int not null default 1 check (party_size between 1 and 5),
+  phone        text,
+  email        text,
+  texted_at    timestamptz,
+  emailed_at   timestamptz,
+  created_at   timestamptz not null default now()
+);
+
+create unique index if not exists guests_name_key on guests (lower(name));
+
+-- A reply sent from an invite link belongs to that guest. Walk-up replies from the plain site have none.
+alter table rsvps add column if not exists guest_id uuid references guests (id) on delete set null;
+create unique index if not exists rsvps_guest_id_key on rsvps (guest_id);
+
 -- Supabase exposes the public schema through its REST API using the anon key.
 -- Turning on row level security with no policies means that API can read nothing here.
 -- The site itself connects as the database owner over DATABASE_URL, which bypasses RLS.
 alter table rsvps enable row level security;
 alter table rsvp_attempts enable row level security;
+alter table guests enable row level security;
