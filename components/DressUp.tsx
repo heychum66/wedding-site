@@ -125,12 +125,15 @@ export default function DressUp() {
 
   return (
     <>
+      <p className="no-white">
+        <span>One rule</span>
+        Please do not wear white&hellip; <em>or else.</em>
+      </p>
       <div className="dress">
         {card("him", HIM_SVG, "A figure being dressed in a suit and tie", "For him", "Suit and tie")}
         {card("her", HER_SVG, "A figure being dressed in a below-the-knee dress", "For her", "Below-the-knee dress")}
       </div>
       <div className="dress-foot">
-        <p>Please do not wear white&hellip; <em>or else</em>.</p>
         <button className="btn ghost" type="button" onClick={dress}>
           Dress them again
         </button>

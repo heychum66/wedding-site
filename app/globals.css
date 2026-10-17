@@ -272,8 +272,11 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .76rem var(--body);lette
 .plist b{display:block;font:400 1.15rem/1.2 var(--display)}
 .plist small{display:block;color:var(--ink-soft);font-size:.9rem;line-height:1.45;margin-top:2px}
 .plist button:hover b{color:var(--gold)}
-.dress-foot{display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;margin-top:30px;color:var(--ink-soft)}
-.dress-foot p{margin:0;max-width:60ch}
+.dress-foot{display:flex;justify-content:center;margin-top:30px}
+/* The one rule, front and center above the outfits. */
+.no-white{max-width:720px;margin:0 auto 44px;padding:22px 16px;border-block:1px solid var(--gold);text-align:center;font:italic 400 clamp(1.7rem,4vw,2.6rem)/1.2 var(--display);color:var(--ink)}
+.no-white span{display:block;margin-bottom:10px;font:500 .78rem var(--body);font-style:normal;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.no-white em{color:var(--rose);white-space:nowrap}
 .mq{fill:#ECE6D8;stroke:rgba(154,118,40,.55);stroke-width:.8}
 /* Pieces settle in with long ease-out curves; taking them off is quick so "Dress them again" doesn't drag. */
 .pc{transform-box:fill-box;transition:transform 1s cubic-bezier(.22,1,.36,1),opacity .8s ease,clip-path 1.1s cubic-bezier(.22,1,.36,1)}
