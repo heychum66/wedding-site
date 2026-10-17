@@ -1,6 +1,7 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import nodemailer from "nodemailer";
+import { z } from "zod";
 import { site } from "@/content/site";
 import { db, type GuestRow } from "@/lib/db";
 
@@ -12,6 +13,28 @@ export async function guestByToken(token: unknown) {
   const [g] = await db()<GuestRow[]>`select * from guests where invite_token = ${token}`;
   return g ?? null;
 }
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** One guest typed in at /admin (Add guest / Edit). Blank strings mean "none". */
+export const guestInput = z.object({
+  first_name: z.string().trim().min(1, "Add a first name.").max(100),
+  last_name: z.string().trim().max(100).default(""),
+  phone: z.string().trim().max(40).default(""),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .max(200)
+    .default("")
+    .refine((v) => !v || EMAIL.test(v), "That email doesn't look right."),
+  plus_one_allowed: z.boolean().default(false),
+  plus_one: z.boolean().nullable().default(null),
+  side: z.string().trim().max(40).default(""),
+});
+
+/** True when Postgres refused a second guest with the same name. */
+export const isDuplicateName = (err: unknown) => (err as { code?: string })?.code === "23505";
 
 /** What a guest's own invite page gets back about their invitation. */
 export const publicGuest = (g: GuestRow) => ({

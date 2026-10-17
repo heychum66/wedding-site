@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useSyncExternalStore, type ChangeEvent } from "react";
+import { useRef, useState, useSyncExternalStore, type ChangeEvent, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 export type GuestListRow = {
@@ -8,6 +8,7 @@ export type GuestListRow = {
   invite_token: string;
   name: string;
   first_name: string | null;
+  last_name: string | null;
   party_size: number;
   phone: string | null;
   email: string | null;
@@ -25,6 +26,17 @@ const TEMPLATE = "data:text/csv;charset=utf-8," + encodeURIComponent(
   "First name,Last name,Phone,Email,Plus-one allowed,Bringing plus-one,Side\r\n",
 );
 
+type Draft = {
+  first_name: string;
+  last_name: string;
+  phone: string;
+  email: string;
+  plus_one_allowed: boolean;
+  plus_one: boolean | null;
+  side: string;
+};
+const blankDraft: Draft = { first_name: "", last_name: "", phone: "", email: "", plus_one_allowed: false, plus_one: null, side: "" };
+
 type Filter = "all" | "unsent" | "waiting" | "replied";
 
 const noSubscribe = () => () => {};
@@ -40,7 +52,15 @@ function smsNumber(phone: string) {
   return digits;
 }
 
-export default function AdminGuests({ guests, inviteText }: { guests: GuestListRow[]; inviteText: string }) {
+export default function AdminGuests({
+  guests,
+  inviteText,
+  couple,
+}: {
+  guests: GuestListRow[];
+  inviteText: string;
+  couple: { first: string; second: string };
+}) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [rows, setRows] = useState(guests);
@@ -51,6 +71,10 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
   const [copied, setCopied] = useState<string | null>(null);
   const [status, setStatus] = useState({ text: "", err: false });
   const [busy, setBusy] = useState(false);
+  // "new", a guest id, or null when the form is closed.
+  const [editing, setEditing] = useState<string | null>(null);
+  const [draft, setDraft] = useState<Draft>(blankDraft);
+  const formRef = useRef<HTMLFormElement>(null);
 
   // Fresh server data after an import replaces local edits.
   if (guests !== prev) {
@@ -95,6 +119,63 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
     }
   }
 
+  function openForm(g?: GuestListRow) {
+    setStatus({ text: "", err: false });
+    setEditing(g ? g.id : "new");
+    setDraft(
+      g
+        ? {
+            // Guests imported with a single Name column have no first/last split yet.
+            first_name: g.first_name ?? (g.last_name ? "" : g.name),
+            last_name: g.last_name ?? "",
+            phone: g.phone ?? "",
+            email: g.email ?? "",
+            plus_one_allowed: g.plus_one_allowed,
+            plus_one: g.plus_one,
+            side: g.side ?? "",
+          }
+        : blankDraft,
+    );
+    requestAnimationFrame(() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }));
+  }
+
+  async function save(e: FormEvent) {
+    e.preventDefault();
+    if (!draft.first_name.trim()) {
+      setStatus({ text: "Add a first name.", err: true });
+      return;
+    }
+    setBusy(true);
+    try {
+      const isNew = editing === "new";
+      const res = await fetch(isNew ? "/api/admin/guests" : `/api/admin/guests/${editing}`, {
+        method: isNew ? "POST" : "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draft),
+      });
+      const d = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setStatus({ text: d.error ?? "That didn't save. Try again.", err: true });
+        return;
+      }
+      const who = [draft.first_name, draft.last_name].map((x) => x.trim()).filter(Boolean).join(" ");
+      setStatus({ text: isNew ? `Added ${who}.` : `Saved ${who}.`, err: false });
+      // Adding keeps the form open (blank) for the next person; editing closes it.
+      if (isNew) setDraft(blankDraft);
+      else setEditing(null);
+      router.refresh();
+    } catch {
+      setStatus({ text: "That didn't save. Check your connection and try again.", err: true });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  const field = (k: "first_name" | "last_name" | "phone" | "email") => ({
+    value: draft[k],
+    onChange: (e: ChangeEvent<HTMLInputElement>) => setDraft((d) => ({ ...d, [k]: e.target.value })),
+  });
+
   function markTexted(g: GuestListRow) {
     const now = new Date().toISOString();
     setRows((rs) => rs.map((r) => (r.id === g.id ? { ...r, texted_at: now } : r)));
@@ -125,7 +206,10 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
         <h3>Invitations</h3>
         <div className="admin-acts">
           <input ref={fileRef} type="file" accept=".csv,text/csv" hidden onChange={upload} />
-          <button className="btn" type="button" disabled={busy} onClick={() => fileRef.current?.click()}>
+          <button className="btn" type="button" onClick={() => openForm()}>
+            Add guest
+          </button>
+          <button className="btn ghost" type="button" disabled={busy} onClick={() => fileRef.current?.click()}>
             Import CSV
           </button>
           <a className="btn ghost" href={TEMPLATE} download="guest-list-template.csv">Download template</a>
@@ -138,6 +222,68 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
         name is required. Importing again updates matching names instead of adding duplicates.
       </p>
       <p className={"status" + (status.err ? " err" : "")} role="status">{status.text}</p>
+
+      {editing && (
+        <form className="gform" ref={formRef} onSubmit={save} noValidate>
+          <h4>{editing === "new" ? "Add a guest" : "Edit guest"}</h4>
+          <div className="f">
+            <label htmlFor="g-first">First name</label>
+            <input id="g-first" autoFocus required maxLength={100} {...field("first_name")} />
+          </div>
+          <div className="f">
+            <label htmlFor="g-last">Last name</label>
+            <input id="g-last" maxLength={100} {...field("last_name")} />
+          </div>
+          <div className="f">
+            <label htmlFor="g-phone">Phone</label>
+            <input id="g-phone" type="tel" maxLength={40} {...field("phone")} />
+          </div>
+          <div className="f">
+            <label htmlFor="g-email">Email</label>
+            <input id="g-email" type="email" maxLength={200} {...field("email")} />
+          </div>
+          <div className="f">
+            <label htmlFor="g-plus">Plus-one allowed</label>
+            <select
+              id="g-plus"
+              value={draft.plus_one_allowed ? "yes" : "no"}
+              onChange={(e) => setDraft((d) => ({ ...d, plus_one_allowed: e.target.value === "yes", plus_one: e.target.value === "yes" ? d.plus_one : null }))}
+            >
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </div>
+          <div className="f">
+            <label htmlFor="g-bring">Bringing plus-one</label>
+            <select
+              id="g-bring"
+              disabled={!draft.plus_one_allowed}
+              value={draft.plus_one == null ? "" : draft.plus_one ? "yes" : "no"}
+              onChange={(e) => setDraft((d) => ({ ...d, plus_one: e.target.value === "" ? null : e.target.value === "yes" }))}
+            >
+              <option value="">Not known yet</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div className="f">
+            <label htmlFor="g-side">Side</label>
+            <select id="g-side" value={draft.side} onChange={(e) => setDraft((d) => ({ ...d, side: e.target.value }))}>
+              <option value="">–</option>
+              <option value={couple.first}>{couple.first}</option>
+              <option value={couple.second}>{couple.second}</option>
+              <option value="Both">Both</option>
+              {draft.side && ![couple.first, couple.second, "Both"].includes(draft.side) && <option value={draft.side}>{draft.side}</option>}
+            </select>
+          </div>
+          <div className="gform-acts">
+            <button className="btn" type="submit" disabled={busy}>{editing === "new" ? "Add" : "Save"}</button>
+            <button className="btn ghost" type="button" onClick={() => setEditing(null)}>
+              {editing === "new" ? "Done" : "Cancel"}
+            </button>
+          </div>
+        </form>
+      )}
 
       {rows.length > 0 && (
         <>
@@ -186,7 +332,7 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
           </thead>
           <tbody>
             {!rows.length && (
-              <tr><td colSpan={7} style={{ opacity: 0.7 }}>No one here yet. Import your guest spreadsheet to get everyone&apos;s invite links.</td></tr>
+              <tr><td colSpan={7} style={{ opacity: 0.7 }}>No one here yet. Add guests one at a time, or import your spreadsheet.</td></tr>
             )}
             {rows.length > 0 && !shown.length && (
               <tr><td colSpan={7} style={{ opacity: 0.7 }}>Nobody in this group.</td></tr>
@@ -233,6 +379,9 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
                     )}
                     <button className="del" type="button" onClick={() => copy(g, "link")}>
                       {copied === g.id + "link" ? "Copied" : "Copy link"}
+                    </button>
+                    <button className="del" type="button" onClick={() => openForm(g)} aria-label={`Edit ${g.name}`}>
+                      Edit
                     </button>
                     {confirming === g.id ? (
                       <>
