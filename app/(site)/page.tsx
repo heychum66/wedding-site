@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { googleCalendarUrl, outlookCalendarUrl } from "@/lib/calendar";
+import { googleCalendarUrl, office365CalendarUrl, outlookCalendarUrl, yahooCalendarUrl } from "@/lib/calendar";
 import { dateFull, weekday } from "@/lib/dates";
+import AddToCalendar from "@/components/AddToCalendar";
 import Countdown from "@/components/Countdown";
 import HeroShell from "@/components/HeroShell";
 import InviteRedirect from "@/components/InviteRedirect";
@@ -10,6 +11,15 @@ import Names from "@/components/Names";
 import Spray from "@/components/Spray";
 
 const { names, venue } = site;
+
+const CALENDARS = [
+  { label: "Apple Calendar", href: "/api/calendar.ics", download: "evan-and-remy.ics" },
+  { label: "Google Calendar", href: googleCalendarUrl },
+  { label: "Outlook.com", href: outlookCalendarUrl },
+  { label: "Outlook (work or school)", href: office365CalendarUrl },
+  { label: "Yahoo Calendar", href: yahooCalendarUrl },
+  { label: "Other (.ics file)", href: "/api/calendar.ics", download: "evan-and-remy.ics" },
+];
 
 const TILES = [
   { href: "/the-day", eyebrow: "Venue & schedule", title: "The day" },
@@ -39,12 +49,7 @@ export default function Home() {
           <div className="datebox">
             {dateFull}<small><span>{weekday}</span><i> · </i><span>{venue.name}</span><i> · </i><span>{venue.city}</span></small>
           </div>
-          <div className="attire">Formal attire</div>
-          <div className="cal">
-            <a className="btn ghost" target="_blank" rel="noopener" href={googleCalendarUrl}>Add to Google Calendar</a>
-            <a className="btn ghost" target="_blank" rel="noopener" href={outlookCalendarUrl}>Add to Outlook</a>
-            <a className="btn ghost" href="/api/calendar.ics" download="evan-and-remy.ics">Apple / .ics</a>
-          </div>
+          <AddToCalendar options={CALENDARS} />
         </div>
       </HeroShell>
 
