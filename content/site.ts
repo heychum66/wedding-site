@@ -17,7 +17,7 @@ export const site = {
     start: "2027-09-18T16:30:00-04:00",
     end: "2027-09-19T00:00:00-04:00",
     description:
-      "Black tie. Ceremony, dinner and dancing at Edgewood Country Club. Times are tentative; check the wedding site for updates.",
+      "Formal attire. Ceremony, dinner and dancing at Edgewood Country Club. Times are tentative; check the wedding site for updates.",
   },
 
   venue: {
@@ -84,7 +84,7 @@ export type Faq = { q: string; a: string; link?: Link };
 export const faq: Faq[] = [
   {
     q: "What should I wear?",
-    a: "Black tie (see the attire guide above). Tuxedos for the gentlemen; floor-length gowns or formal cocktail attire for the ladies. September evenings in Pittsburgh can cool off, so a wrap is a good idea.",
+    a: "Formal attire (see the guide above). Suits and ties for the gentlemen; dresses that fall below the knee, or other formal wear, for the ladies. September evenings in Pittsburgh can cool off, so a wrap is a good idea.",
   },
   {
     q: "Can I bring a plus-one?",

@@ -21,7 +21,7 @@ const siteUrl =
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
 
 const title = "Evan & Remy · September 18, 2027";
-const description = "Evan and Remy are getting married at Edgewood Country Club in Pittsburgh. Black tie. Kindly reply by August 1.";
+const description = "Evan and Remy are getting married at Edgewood Country Club in Pittsburgh. Formal attire. Kindly reply by August 1.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

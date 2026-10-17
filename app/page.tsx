@@ -61,7 +61,7 @@ export default function Home() {
           <div className="datebox">
             {dateFull}<small><span>{weekday}</span><i> · </i><span>{venue.name}</span><i> · </i><span>{venue.city}</span></small>
           </div>
-          <div className="attire">Black tie</div>
+          <div className="attire">Formal attire</div>
           <div className="cal">
             <a className="btn ghost" target="_blank" rel="noopener" href={googleCalendarUrl}>Add to Google Calendar</a>
             <a className="btn ghost" target="_blank" rel="noopener" href={outlookCalendarUrl}>Add to Outlook</a>
@@ -83,7 +83,7 @@ export default function Home() {
               <h3>{venue.name}</h3>
               <address>{venue.street}<br />{venue.city}, {venue.region} {venue.zip}</address>
               <p style={{ color: "var(--ink-soft)", maxWidth: "42ch" }}>Ceremony, dinner and dancing, all under one roof.</p>
-              <div className="stamp">Black tie</div>
+              <div className="stamp">Formal attire</div>
               <div className="acts" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 24 }}>
                 <a className="btn" href={venue.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
                 <a className="btn ghost" href="#rsvp">RSVP</a>
@@ -102,7 +102,7 @@ export default function Home() {
 
       <section className="s" id="attire">
         <div className="wrap">
-          <SectionHead num="II." eyebrow="What to wear">Black <em>tie</em></SectionHead>
+          <SectionHead num="II." eyebrow="What to wear">Formal <em>attire</em></SectionHead>
           <DressUp />
         </div>
       </section>
