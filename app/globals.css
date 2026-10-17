@@ -65,7 +65,6 @@ nav ul a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--gold)}
 .datebox small span{white-space:nowrap}
 /* Phones: weekday, venue and city stack instead of wrapping mid-line. */
 @media (max-width:560px){.datebox small span{display:block}.datebox small i{display:none}}
-.attire{display:inline-block;margin-top:26px;border-block:1px solid var(--gold);padding:8px 22px;font:500 .8rem var(--body);letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
 
 
 /* countdown */
@@ -202,8 +201,6 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .76rem var(--body);lette
 .names .w.shine{background:linear-gradient(100deg,var(--sapphire-deep) 40%,#3D72D6 47%,#C9A450 50%,#3D72D6 53%,var(--sapphire-deep) 60%);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s ease-in-out infinite}
 .hero .lead{animation:up 1s 1.7s both}
 .datebox{animation:up 1s 1.95s both}
-.attire{animation:up 1s 2.2s both;position:relative;overflow:hidden}
-.attire::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(201,164,80,.28) 50%,transparent 70%);transform:translateX(-120%);animation:sweep 5s 3s ease-in-out infinite}
 @keyframes sweep{0%{transform:translateX(-120%)}30%,100%{transform:translateX(120%)}}
 .tick .n span{display:inline-block}
 .tick .n span.roll{animation:roll .55s cubic-bezier(.2,.8,.2,1)}
@@ -226,7 +223,7 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .76rem var(--body);lette
 }
 
 /* ===== add to calendar ===== */
-.cal{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px;animation:up 1s 2.45s both}
+.cal{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:30px;animation:up 1s 2.2s both}
 .cal .btn{padding:11px 18px;font-size:.66rem}
 .cal-note{font:400 .8rem var(--body);color:var(--ink-soft);margin-top:10px;animation:up 1s 2.5s both}
 
@@ -467,3 +464,12 @@ body{margin:0}
 .next-tab a{display:grid;justify-items:end;gap:4px;text-decoration:none;color:var(--ink);font:italic 400 1.6rem/1.1 var(--display)}
 .next-tab small{font:500 .74rem var(--body);font-style:normal;letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
 .next-tab a:hover span{color:var(--gold)}
+
+/* Add to calendar: one button, a menu of calendar apps under it. */
+.cal .caret{font-size:.9em;transition:transform .2s}
+.cal button[aria-expanded="true"] .caret{transform:rotate(180deg)}
+/* Opens in place (pushing the page down) so the hero never clips it. */
+.cal-menu{list-style:none;margin:0;padding:4px 0;width:min(300px,100%);background:var(--white);border:1px solid var(--line);box-shadow:0 24px 50px -28px rgba(19,38,79,.45);text-align:left;animation:up .25s ease-out both}
+.cal-menu a{display:block;padding:12px 20px;color:var(--ink);text-decoration:none;font:400 1.05rem var(--display)}
+.cal-menu a:hover,.cal-menu a:focus-visible{background:var(--sky);color:var(--sapphire)}
+.cal-menu li+li a{border-top:1px solid var(--line)}
