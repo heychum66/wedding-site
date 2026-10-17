@@ -15,6 +15,9 @@ export type GuestListRow = {
   replied_party: number | null;
 };
 
+/** A blank spreadsheet with the columns the import understands. */
+const TEMPLATE = "data:text/csv;charset=utf-8," + encodeURIComponent("Name,Phone,Email,Party size\r\n");
+
 type Filter = "all" | "unsent" | "waiting" | "replied";
 
 const noSubscribe = () => () => {};
@@ -114,7 +117,8 @@ export default function AdminGuests({ guests, inviteText }: { guests: GuestListR
           <button className="btn" type="button" disabled={busy} onClick={() => fileRef.current?.click()}>
             Import CSV
           </button>
-          {rows.length > 0 && <a className="btn ghost" href="/api/admin/guests.csv">Download with links</a>}
+          <a className="btn ghost" href={TEMPLATE} download="guest-list-template.csv">Download template</a>
+          {rows.length > 0 &&<a className="btn ghost" href="/api/admin/guests.csv">Download with links</a>}
         </div>
       </div>
       <p className="hint">
