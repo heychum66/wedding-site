@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { googleCalendarUrl, office365CalendarUrl, outlookCalendarUrl, yahooCalendarUrl } from "@/lib/calendar";
+import { googleCalendarUrl, outlookCalendarUrl } from "@/lib/calendar";
 import { dateFull, weekday } from "@/lib/dates";
 import AddToCalendar from "@/components/AddToCalendar";
 import Countdown from "@/components/Countdown";
@@ -15,10 +15,7 @@ const { names, venue } = site;
 const CALENDARS = [
   { label: "Apple Calendar", href: "/api/calendar.ics", download: "evan-and-remy.ics" },
   { label: "Google Calendar", href: googleCalendarUrl },
-  { label: "Outlook.com", href: outlookCalendarUrl },
-  { label: "Outlook (work or school)", href: office365CalendarUrl },
-  { label: "Yahoo Calendar", href: yahooCalendarUrl },
-  { label: "Other (.ics file)", href: "/api/calendar.ics", download: "evan-and-remy.ics" },
+  { label: "Outlook", href: outlookCalendarUrl },
 ];
 
 const TILES = [
