@@ -1,4 +1,7 @@
-import { site, venueAddress } from "@/content/site";
+import { ceremonyAddress, site } from "@/content/site";
+
+// The calendar entry points people to the church first; the description names the reception.
+const venueAddress = ceremonyAddress;
 
 const { title, start, end, description } = site.event;
 

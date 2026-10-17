@@ -17,18 +17,40 @@ export const site = {
     start: "2027-09-18T16:30:00-04:00",
     end: "2027-09-19T00:00:00-04:00",
     description:
-      "Formal attire. Ceremony, dinner and dancing at Edgewood Country Club. Times are tentative; check the wedding site for updates.",
+      "Mass at St. Stanislaus Kostka Church (57 21st Street, Pittsburgh), then the reception at Edgewood Country Club (100 Churchill Road). Formal attire. Times are tentative; check the wedding site for updates.",
   },
 
-  venue: {
+  /** First stop: the Mass. Times are TBD until the parish confirms. */
+  ceremony: {
+    label: "The Mass",
+    name: "St. Stanislaus Kostka Church",
+    street: "57 21st Street",
+    city: "Pittsburgh",
+    region: "PA",
+    zip: "15222",
+    area: "In the Strip District",
+    time: "TBD",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=St.+Stanislaus+Kostka+Church+57+21st+St+Pittsburgh+PA",
+  },
+  /** Then: cocktails, dinner and dancing. */
+  reception: {
+    label: "The reception",
     name: "Edgewood Country Club",
-    // TODO verify street address and ZIP with the club before invitations go out
     street: "100 Churchill Road",
     city: "Pittsburgh",
     region: "PA",
     zip: "15235",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Edgewood+Country+Club+Churchill+PA",
+    area: "In Churchill, just east of the city",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Edgewood+Country+Club+100+Churchill+Rd+Pittsburgh+PA",
+    /** Rows on The Day tab. */
+    schedule: [
+      { t: "TBD", what: "Cocktail hour", note: "Drinks and hors d'oeuvres." },
+      { t: "TBD", what: "Dinner & dancing", note: "Dinner, champagne and an open dance floor." },
+      { t: "Late", what: "Last call", note: "We'll be on the dance floor." },
+    ],
   },
+  /** Getting from the church to the club. */
+  between: "About 20 minutes by car, east on the Parkway (I-376). Free parking at Edgewood.",
 
   /** RSVPs close at the end of this day (Eastern). The form switches to a "closed" message after. */
   rsvpDeadline: "2027-08-01T23:59:59-04:00",
@@ -58,13 +80,20 @@ export const site = {
       heading: "Flying in",
       big: "PIT",
       small: "Pittsburgh International",
-      body: "About 35–45 minutes to the venue by car, depending on traffic through the tunnels. Rideshare is easy from the airport.",
+      body: "About 25 minutes to the church and 35–45 to Edgewood. Rideshare is easy from the airport.",
     },
     driving: {
       heading: "Driving in",
       big: "~3 hr",
       small: "from Columbus via I-70",
-      body: "The venue is east of downtown in Churchill. Free parking on site.",
+      body: "Both stops are a short drive apart: the church in the city, Edgewood about 20 minutes east.",
+    },
+    parking: {
+      heading: "Parking",
+      items: [
+        { where: "At the church", what: "Street parking and pay lots around 21st & Smallman. Give yourself a few extra minutes." },
+        { where: "At Edgewood", what: "Free parking at the club." },
+      ],
     },
     weekend: {
       heading: "Make a weekend of it",
@@ -100,12 +129,14 @@ export const faq: Faq[] = [
     : { q: "Is there a registry?", a: "Yes, link coming soon. Honestly, you showing up is the gift." },
   {
     q: "Where should I stay?",
-    a: "We're setting up a hotel block. Watch the Travel section for the link.",
+    a: "We're setting up a hotel block. The link will be on the Travel tab.",
   },
   {
     q: "Will it be indoors?",
-    a: "The reception is indoors at Edgewood. We'll share ceremony details closer to the date.",
+    a: "Yes, both are indoors: the Mass at St. Stanislaus Kostka Church in the Strip District, then the reception at Edgewood Country Club.",
   },
 ];
 
-export const venueAddress = `${site.venue.name}, ${site.venue.street}, ${site.venue.city}, ${site.venue.region} ${site.venue.zip}`;
+const fullAddress = (v: { name: string; street: string; city: string; region: string; zip: string }) =>
+  `${v.name}, ${v.street}, ${v.city}, ${v.region} ${v.zip}`;
+export const ceremonyAddress = fullAddress(site.ceremony);
