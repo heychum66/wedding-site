@@ -13,13 +13,13 @@ export default function Faq() {
           <SectionHead eyebrow="Good to know">Questions</SectionHead>
           <div className="faq">
             {faq.map((item) => (
-              <details key={item.q}>
-                <summary>{item.q}</summary>
+              <div className="qa" key={item.q}>
+                <h3>{item.q}</h3>
                 <p>
                   {item.a}
                   {item.link ? <> <a href={item.link.href} target="_blank" rel="noopener">{item.link.label}</a></> : null}
                 </p>
-              </details>
+              </div>
             ))}
           </div>
         </div>
