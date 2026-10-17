@@ -486,8 +486,9 @@ body{margin:0}
 .stops .venue .row{grid-template-columns:70px 1fr;padding-block:14px}
 .stops .venue .row:last-child{border-bottom:0}
 .stops .venue .maps{margin-top:26px}
-.maps{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.maps .btn{padding:11px 16px;font-size:.7rem;letter-spacing:.2em}
+/* Three equal-width buttons. */
+.maps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:440px;margin-inline:auto}
+.maps .btn{justify-content:center;text-align:center;padding:11px 8px;font-size:.7rem;letter-spacing:.16em;white-space:nowrap}
 /* The drive between: a dotted line with the note on it. */
 .between{position:relative;display:flex;align-items:center;justify-content:center;padding:18px 14px;text-align:center}
 .between::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed var(--gold)}
@@ -511,4 +512,5 @@ body{margin:0}
 .facts dd{margin:4px 0 0;color:var(--ink-soft)}
 .weekend{max-width:640px;margin:clamp(40px,6vw,64px) auto 0}
 .weekend h3{font:500 .8rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;text-align:center}
-@media (max-width:520px){.maps{gap:6px;flex-wrap:nowrap}.maps .btn{padding:10px 11px;font-size:.64rem;letter-spacing:.1em;white-space:nowrap}}
+@media (max-width:520px){.maps{gap:6px}.maps .btn{padding:10px 4px;font-size:.62rem;letter-spacing:.08em}}
+@media (max-width:360px){.maps{grid-template-columns:1fr;max-width:220px}}
