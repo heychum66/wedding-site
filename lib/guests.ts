@@ -14,7 +14,13 @@ export async function guestByToken(token: unknown) {
 }
 
 /** What a guest's own invite page gets back about their invitation. */
-export const publicGuest = (g: GuestRow) => ({ name: g.name, party_size: g.party_size, phone: g.phone });
+export const publicGuest = (g: GuestRow) => ({
+  name: g.name,
+  party_size: g.party_size,
+  phone: g.phone,
+  plus_one_allowed: g.plus_one_allowed,
+  plus_one: g.plus_one,
+});
 
 /** NEXT_PUBLIC_SITE_URL when set; otherwise the address the visitor actually used, so links match it. */
 export function siteUrl(req?: Request) {

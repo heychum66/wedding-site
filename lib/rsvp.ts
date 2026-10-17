@@ -25,6 +25,8 @@ export const rsvpSchema = z
     meal: z.string().trim().max(60).optional().nullable(),
     song: trimmed(140),
     note: trimmed(600),
+    /** Only asked on invites that include a plus-one. */
+    plus_one_name: trimmed(120),
     phone: contact(40, "Add a phone number."),
     address_street: contact(200, "Add your mailing address."),
     address_city: contact(100, "Add your city."),
@@ -39,6 +41,7 @@ export const rsvpSchema = z
     ...r,
     party_size: r.attending ? r.party_size : 1,
     meal: r.attending ? r.meal || null : null,
+    plus_one_name: r.attending && r.party_size > 1 ? r.plus_one_name : null,
   }))
   .refine((r) => !r.attending || (r.meal && site.meals.includes(r.meal)), {
     message: "Pick a dinner option.",
@@ -56,6 +59,7 @@ export function publicReply(r: RsvpRow) {
     meal: r.meal,
     song: r.song,
     note: r.note,
+    plus_one_name: r.plus_one_name,
     phone: r.phone,
     address_street: r.address_street,
     address_city: r.address_city,

@@ -82,17 +82,22 @@ async function parse(req: Request) {
 async function saveForGuest(guest: GuestRow, r: RsvpInput) {
   const token = randomBytes(24).toString("base64url");
   const [row] = await db()<(RsvpRow & { edit_token: string })[]>`
-    insert into rsvps (edit_token, guest_id, name, attending, party_size, meal, song, note,
+    insert into rsvps (edit_token, guest_id, name, attending, party_size, meal, song, note, plus_one_name,
                        phone, address_street, address_city, address_state, address_zip)
     values (${token}, ${guest.id}, ${r.name}, ${r.attending}, ${r.party_size}, ${r.meal}, ${r.song}, ${r.note},
-            ${r.phone}, ${r.address_street}, ${r.address_city}, ${r.address_state}, ${r.address_zip})
+            ${r.plus_one_name}, ${r.phone}, ${r.address_street}, ${r.address_city}, ${r.address_state}, ${r.address_zip})
     on conflict (guest_id) do update set
       name = excluded.name, attending = excluded.attending, party_size = excluded.party_size,
-      meal = excluded.meal, song = excluded.song, note = excluded.note, phone = excluded.phone,
+      meal = excluded.meal, song = excluded.song, note = excluded.note, plus_one_name = excluded.plus_one_name,
+      phone = excluded.phone,
       address_street = excluded.address_street, address_city = excluded.address_city,
       address_state = excluded.address_state, address_zip = excluded.address_zip,
       updated_at = now()
     returning *`;
+  // Their answer is the final word on the plus-one, so the guest list follows it.
+  if (guest.plus_one_allowed) {
+    await db()`update guests set plus_one = ${r.attending && r.party_size > 1} where id = ${guest.id}`;
+  }
   await setToken(row.edit_token);
   return row;
 }

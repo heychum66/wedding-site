@@ -16,8 +16,8 @@ async function GuestList() {
   const sql = db();
   const [rows, guests] = await Promise.all([
     sql<RsvpRow[]>`select * from rsvps order by updated_at desc`,
-    sql<(GuestRow & { attending: boolean | null; replied_party: number | null })[]>`
-      select g.*, r.attending, r.party_size as replied_party
+    sql<(GuestRow & { attending: boolean | null; replied_party: number | null; plus_one_name: string | null })[]>`
+      select g.*, r.attending, r.party_size as replied_party, r.plus_one_name
       from guests g left join rsvps r on r.guest_id = g.id
       order by g.name`,
   ]);
@@ -30,9 +30,14 @@ async function GuestList() {
     id: g.id,
     invite_token: g.invite_token,
     name: g.name,
+    first_name: g.first_name,
     party_size: g.party_size,
     phone: g.phone,
     email: g.email,
+    plus_one_allowed: g.plus_one_allowed,
+    plus_one: g.plus_one,
+    plus_one_name: g.plus_one_name,
+    side: g.side,
     texted_at: g.texted_at?.toISOString() ?? null,
     attending: g.attending,
     replied_party: g.replied_party,

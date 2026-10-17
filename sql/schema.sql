@@ -53,9 +53,19 @@ create table if not exists guests (
 
 create unique index if not exists guests_name_key on guests (lower(name));
 
+-- Per-person details, added after the first version of the table.
+alter table guests add column if not exists first_name text;
+alter table guests add column if not exists last_name text;
+alter table guests add column if not exists plus_one_allowed boolean not null default false;
+-- Bringing a plus-one: set by the import, then by the guest's own reply. null = not known yet.
+alter table guests add column if not exists plus_one boolean;
+-- Whose side: "Evan", "Remy", "Both", or whatever the spreadsheet said.
+alter table guests add column if not exists side text;
+
 -- A reply sent from an invite link belongs to that guest. Walk-up replies from the plain site have none.
 alter table rsvps add column if not exists guest_id uuid references guests (id) on delete set null;
 create unique index if not exists rsvps_guest_id_key on rsvps (guest_id);
+alter table rsvps add column if not exists plus_one_name text;
 
 -- Supabase exposes the public schema through its REST API using the anon key.
 -- Turning on row level security with no policies means that API can read nothing here.

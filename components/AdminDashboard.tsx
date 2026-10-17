@@ -12,6 +12,7 @@ export type AdminRow = {
   meal: string | null;
   song: string | null;
   note: string | null;
+  plus_one_name: string | null;
   phone: string | null;
   address_street: string | null;
   address_city: string | null;
@@ -108,7 +109,7 @@ export default function AdminDashboard({ rows: initial, meals }: { rows: AdminRo
               <tr key={r.id}>
                 <td><b>{r.name}</b></td>
                 <td><span className={"pill " + (r.attending ? "y" : "n")}>{r.attending ? "Yes" : "No"}</span></td>
-                <td>{r.attending ? r.party_size : "–"}</td>
+                <td>{r.attending ? r.party_size : "–"}{r.attending && r.plus_one_name && <small>+ {r.plus_one_name}</small>}</td>
                 <td>{dash(r.meal)}</td>
                 <td>{r.phone ? <a href={`tel:${r.phone}`}>{r.phone}</a> : "–"}</td>
                 <td>
