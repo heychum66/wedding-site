@@ -12,10 +12,7 @@ export default function Registry() {
       <section className="s" id="registry">
         <div className="wrap">
           <SectionHead eyebrow="If you'd like">The <em>registry</em></SectionHead>
-          <p className="registry-intro">
-            Your being there is the best gift we could ask for. If you&apos;d like to celebrate with something more, here&apos;s
-            where to find us.
-          </p>
+          <p className="registry-intro">{site.registryNote}</p>
           {registries.length ? (
             <ul className="registries">
               {registries.map((r) => (
@@ -31,7 +28,7 @@ export default function Registry() {
           ) : (
             <div className="registries-soon tcard">
               <h3>Coming soon</h3>
-              <p>We&apos;re still putting it together. Check back here for the link.</p>
+              <p>Our registry link will be here shortly.</p>
             </div>
           )}
         </div>
