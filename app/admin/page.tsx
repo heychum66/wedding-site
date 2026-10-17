@@ -31,6 +31,7 @@ async function GuestList() {
     invite_token: g.invite_token,
     name: g.name,
     first_name: g.first_name,
+    last_name: g.last_name,
     party_size: g.party_size,
     phone: g.phone,
     email: g.email,
@@ -45,7 +46,7 @@ async function GuestList() {
   return (
     <>
       <AdminDashboard rows={data} meals={site.meals} />
-      <AdminGuests guests={invites} inviteText={site.inviteText} />
+      <AdminGuests guests={invites} inviteText={site.inviteText} couple={site.names} />
     </>
   );
 }

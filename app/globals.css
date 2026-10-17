@@ -436,3 +436,7 @@ body{margin:0}
 .invite-hi p{margin:0;color:var(--ink-soft)}
 .email-me{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:14px}
 .email-me .btn{justify-self:start}
+.admin .gform{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px 24px;border:1px solid var(--line);padding:24px;margin:8px 0 26px;background:rgba(217,188,116,.05)}
+.admin .gform h4{grid-column:1/-1;margin:0;font:italic 400 1.5rem/1 var(--display);color:var(--gold)}
+.admin .gform select:disabled{opacity:.45}
+.admin .gform-acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px}
