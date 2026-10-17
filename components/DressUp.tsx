@@ -130,7 +130,7 @@ export default function DressUp() {
         {card("her", HER_SVG, "A figure being dressed in a below-the-knee dress", "For her", "Below-the-knee dress")}
       </div>
       <div className="dress-foot">
-        <p>Tap any piece to take it on or off. Please skip white and ivory. That one&apos;s spoken for.</p>
+        <p>Tap any piece to take it on or off. And please, do not wear white&hellip; <em>or else</em>.</p>
         <button className="btn ghost" type="button" onClick={dress}>
           Dress them again
         </button>
