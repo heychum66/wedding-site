@@ -96,16 +96,6 @@ export const site = {
       small: "from Columbus via I-70",
       body: "Both stops are a short drive apart: the church in the city, Edgewood about 20 minutes east.",
     },
-    weekend: {
-      heading: "Make a weekend of it",
-      items: [
-        "Ride the Duquesne Incline up Mount Washington for the skyline",
-        "Eat your way through the Strip District",
-        "Walk the Roberto Clemente Bridge to PNC Park",
-        "Phipps Conservatory in Oakland",
-        "A Primanti Bros. sandwich, fries inside, no debate",
-      ],
-    },
   },
 };
 

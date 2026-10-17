@@ -51,12 +51,6 @@ export default function Travel() {
               )}
             </div>
           </div>
-          <div className="weekend">
-            <h3>{travel.weekend.heading}</h3>
-            <ul className="todo-list">
-              {travel.weekend.items.map((t) => <li key={t}>{t}</li>)}
-            </ul>
-          </div>
         </div>
       </section>
       <NextTab href="/registry" label="Registry" />
