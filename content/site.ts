@@ -44,8 +44,8 @@ export const site = {
     parking: "Free parking in the club's lot.",
     /** Rows on The Day tab. */
     schedule: [
-      { t: "TBD", what: "Cocktail hour", note: "Drinks and hors d'oeuvres." },
-      { t: "TBD", what: "Dinner & dancing", note: "Dinner, champagne and an open dance floor." },
+      { t: "TBD", what: "Cocktail hour", note: "Drinks and passed hors d'oeuvres." },
+      { t: "TBD", what: "Dinner & dancing", note: "A seated dinner, then an open dance floor." },
       { t: "Late", what: "Last call", note: "We'll be on the dance floor." },
     ],
   },
@@ -122,6 +122,10 @@ export const faq: Faq[] = [
       ? "Yes, it's on the Registry tab. Honestly, you showing up is the gift."
       : "Yes, it'll be on the Registry tab soon. Honestly, you showing up is the gift.",
     link: { href: "/registry", label: "Go to the registry" },
+  },
+  {
+    q: "Will there be food?",
+    a: "Yes! Hors d'oeuvres during cocktail hour, then a seated dinner. You'll choose your entrée when you RSVP.",
   },
   {
     q: "Will there be a bar?",
