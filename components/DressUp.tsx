@@ -8,11 +8,8 @@ type Piece = { k: string; b: string; small: string };
 
 const PIECES: Record<Who, Piece[]> = {
   him: [
-    { k: "trousers", b: "Suit trousers", small: "Tailored, matching the jacket." },
-    { k: "shirt", b: "Dress shirt", small: "Crisp and pressed. White or a light color." },
-    { k: "tie", b: "Tie", small: "A necktie or a bow tie, your call." },
-    { k: "jacket", b: "Suit jacket", small: "Navy, charcoal, black, or another dark tone." },
-    { k: "square", b: "Pocket square", small: "Optional, but a nice touch." },
+    { k: "shirt", b: "Shirt & tie", small: "A pressed dress shirt with a necktie or bow tie." },
+    { k: "suit", b: "Suit", small: "Navy, charcoal, black, or another dark tone." },
     { k: "shoes", b: "Dress shoes", small: "Polished leather, please. No sneakers." },
   ],
   her: [
@@ -42,7 +39,8 @@ export default function DressUp() {
       if (!f) continue;
       // First run counts as a change, like the prototype's initial "dress everything" pass.
       const changed = prev.current === on || PIECES[w].some((p) => prev.current[w][p.k] !== on[w][p.k]);
-      for (const p of PIECES[w]) f.querySelector(`.pc[data-k="${p.k}"]`)?.classList.toggle("off", !on[w][p.k]);
+      for (const p of PIECES[w])
+        f.querySelectorAll(`.pc[data-k="${p.k}"]`).forEach((el) => el.classList.toggle("off", !on[w][p.k]));
       if (!changed) continue;
       f.classList.remove("dressed");
       if (PIECES[w].every((p) => on[w][p.k])) {

@@ -1,4 +1,5 @@
-// SVG figures (a suit and tie, a below-the-knee dress), first drawn for the prototype. Pieces carry class "off" until dressed;
+// SVG figures (a suit and tie, a below-the-knee dress), first drawn for the prototype.
+// A data-k can cover several groups: "suit" is trousers + jacket, "shirt" is shirt + tie. Pieces carry class "off" until dressed;
 // the component strips it for the server render so the figures rest fully dressed.
 
 export const HIM_SVG = `  <g class="mq">
@@ -9,10 +10,10 @@ export const HIM_SVG = `  <g class="mq">
     <circle cx="51" cy="211" r="6"/><circle cx="149" cy="211" r="6"/>
   </g>
   <path d="M81 38 Q100 20 119 38 Q114 30 100 30 Q86 30 81 38 Z" fill="#0B0A0D"/>
-  <g class="pc drop off" data-k="trousers"><path d="M72 205 L128 205 L126 393 L104 393 L100 236 L96 393 L74 393 Z" fill="#22304F" stroke="#3B4866" stroke-width=".6"/><path d="M86 214 L85 390 M114 214 L115 390" stroke="#2F3E62" stroke-width=".9"/></g>
+  <g class="pc drop off" data-k="suit"><path d="M72 205 L128 205 L126 393 L104 393 L100 236 L96 393 L74 393 Z" fill="#22304F" stroke="#3B4866" stroke-width=".6"/><path d="M86 214 L85 390 M114 214 L115 390" stroke="#2F3E62" stroke-width=".9"/></g>
   <g class="pc drop off" data-k="shirt"><path d="M78 86 L122 86 L118 204 L82 204 Z" fill="#F7F4EE"/><path d="M100 98 V200" stroke="#DCD6CA" stroke-width=".6"/><path d="M88 85 L100 98 L112 85 L108 83 L100 92 L92 83 Z" fill="#FFFFFF" stroke="#D2CABB" stroke-width=".6"/></g>
-  <g class="pc drop off" data-k="tie"><path d="M96.5 92 L103.5 92 L102.5 100 L97.5 100 Z" fill="#0E5A43"/><path d="M97.5 100 L102.5 100 L107 150 L100 158 L93 150 Z" fill="#0E5A43"/><path d="M95 116 L105 110 M94 130 L106 124 M93.5 144 L106.5 138" stroke="#2A8A68" stroke-width="1.3" opacity=".55"/></g>
-  <g class="pc swing off" data-k="jacket">
+  <g class="pc drop off" data-k="shirt"><path d="M96.5 92 L103.5 92 L102.5 100 L97.5 100 Z" fill="#0E5A43"/><path d="M97.5 100 L102.5 100 L107 150 L100 158 L93 150 Z" fill="#0E5A43"/><path d="M95 116 L105 110 M94 130 L106 124 M93.5 144 L106.5 138" stroke="#2A8A68" stroke-width="1.3" opacity=".55"/></g>
+  <g class="pc swing off" data-k="suit">
     <path d="M60 92 Q48 140 45 200 L57 203 Q62 150 70 110 Z" fill="#22304F" stroke="#3B4866" stroke-width=".6"/>
     <path d="M140 92 Q152 140 155 200 L143 203 Q138 150 130 110 Z" fill="#22304F" stroke="#3B4866" stroke-width=".6"/>
     <path d="M60 92 Q72 86 86 86 L100 166 L114 86 Q128 86 140 92 L137 214 L100 219 L63 214 Z" fill="#22304F" stroke="#3B4866" stroke-width=".6"/>
@@ -20,7 +21,6 @@ export const HIM_SVG = `  <g class="mq">
     <circle cx="100" cy="176" r="2.2" fill="#3B4866"/><circle cx="100" cy="192" r="2.2" fill="#3B4866"/>
     <path d="M70 168 L88 168 M112 168 L130 168" stroke="#3B4866" stroke-width=".8"/>
   </g>
-  <g class="pc pop off" data-k="square"><path d="M118 121 L131 121 L127 112 L124.5 116 L122 111 Z" fill="#F7F4EE" stroke="#B08D3E" stroke-width=".6"/></g>
   <g class="pc rise off" data-k="shoes"><path d="M70 393 Q84 389 99 393 L99 400 L70 400 Q68 396 70 393 Z" fill="#1B1412"/><path d="M101 393 Q116 389 130 393 Q132 396 130 400 L101 400 Z" fill="#1B1412"/><path d="M75 394 Q83 392 90 394 M110 394 Q117 392 125 394" stroke="#8A7A70" stroke-width=".8" opacity=".7"/></g>
   <path class="glint" d="M0 -7 L1.6 -1.6 L7 0 L1.6 1.6 L0 7 L-1.6 1.6 L-7 0 L-1.6 -1.6 Z" transform="translate(150 80)"/>
   <path class="glint" d="M0 -6 L1.4 -1.4 L6 0 L1.4 1.4 L0 6 L-1.4 1.4 L-6 0 L-1.4 -1.4 Z" transform="translate(52 150)"/>
