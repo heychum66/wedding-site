@@ -25,17 +25,6 @@ export const outlookCalendarUrl =
   "&body=" +
   encodeURIComponent(description);
 
-/** Work or school Microsoft 365 accounts use a different Outlook host. */
-export const office365CalendarUrl = outlookCalendarUrl.replace("outlook.live.com", "outlook.office.com");
-
-export const yahooCalendarUrl =
-  "https://calendar.yahoo.com/?v=60&title=" +
-  encodeURIComponent(title) +
-  `&st=${utcStamp(start)}&et=${utcStamp(end)}&in_loc=` +
-  encodeURIComponent(venueAddress) +
-  "&desc=" +
-  encodeURIComponent(description);
-
 /** RFC 5545 text escaping. */
 const icsText = (s: string) => s.replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n");
 
