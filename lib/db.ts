@@ -33,8 +33,21 @@ export type RsvpRow = {
   address_city: string | null;
   address_state: string | null;
   address_zip: string | null;
+  guest_id: string | null;
   created_at: Date;
   updated_at: Date;
+};
+
+export type GuestRow = {
+  id: string;
+  invite_token: string;
+  name: string;
+  party_size: number;
+  phone: string | null;
+  email: string | null;
+  texted_at: Date | null;
+  emailed_at: Date | null;
+  created_at: Date;
 };
 
 export const RSVP_COLUMNS = [

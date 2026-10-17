@@ -424,3 +424,20 @@ body{margin:0}
 .admin .confirm{display:flex;gap:6px;align-items:center}
 .login{max-width:420px;margin:0 auto;padding-block:clamp(64px,14vh,140px)}
 .login form{margin-top:28px}
+.admin .invites{margin-top:72px;border-top:1px solid var(--line);padding-top:34px}
+.admin .invites .admin-bar h3{margin:0}
+.admin .invites table{min-width:860px}
+.admin .hint{color:var(--ink-soft);max-width:70ch;margin:6px 0 0}
+.admin .filters{display:flex;flex-wrap:wrap;gap:8px;margin:-6px 0 18px}
+.admin .filters button{background:none;border:1px solid var(--line);color:var(--ink-soft);padding:7px 14px;font:500 .62rem var(--body);letter-spacing:.2em;text-transform:uppercase;cursor:pointer}
+.admin .filters button[aria-pressed="true"]{border-color:var(--gold);color:var(--ink);background:rgba(217,188,116,.14)}
+.admin .acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.admin a.del{text-decoration:none;display:inline-block}
+.admin .del.go{border-color:var(--btn-bg);color:var(--btn-bg)}
+.admin .del.go:hover{background:var(--btn-bg);color:var(--btn-fg)}
+.pill.w{border:1px dashed var(--line);color:var(--ink-soft)}
+.invite-hi{margin-bottom:28px}
+.invite-hi h3{font:italic 400 2.4rem/1.05 var(--display);color:var(--gold);margin:10px 0 8px}
+.invite-hi p{margin:0;color:var(--ink-soft)}
+.email-me{margin-top:36px;padding-top:24px;border-top:1px solid var(--line);display:grid;gap:14px}
+.email-me .btn{justify-self:start}

@@ -16,6 +16,8 @@ type Reply = {
   address_zip: string | null;
 };
 
+type Guest = { name: string; party_size: number; phone: string | null };
+
 type Props = {
   meals: string[];
   maxParty: number;
@@ -47,14 +49,25 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
   const [closed, setClosed] = useState(false);
   const [status, setStatus] = useState({ text: "", err: false });
   const [busy, setBusy] = useState(false);
+  const [invite, setInvite] = useState<string | null>(null);
+  const [guest, setGuest] = useState<Guest | null>(null);
+  const [canEmail, setCanEmail] = useState(false);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  // Coming back? The httpOnly cookie identifies the guest's earlier reply.
+  // Personal invite links carry ?i=<code>. Otherwise the httpOnly cookie finds an earlier reply.
   useEffect(() => {
-    fetch("/api/rsvp", { cache: "no-store" })
+    const code = new URLSearchParams(window.location.search).get("i");
+    fetch(code ? `/api/rsvp?i=${encodeURIComponent(code)}` : "/api/rsvp", { cache: "no-store" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((d: { reply: Reply | null; closed?: boolean } | null) => {
+      .then((d: { reply: Reply | null; closed?: boolean; guest?: Guest; email?: boolean } | null) => {
         setClosed(d?.closed ?? Date.now() > new Date(deadline).getTime());
+        if (d?.guest) {
+          const g = d.guest;
+          setInvite(code);
+          setGuest(g);
+          setCanEmail(Boolean(d.email));
+          setF((s) => ({ ...s, name: g.name, party: String(g.party_size), phone: g.phone ?? "" }));
+        }
         if (!d?.reply) return;
         const r = d.reply;
         setHasReply(true);
@@ -101,12 +114,14 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
       song: f.song.trim().slice(0, 140),
       note: f.note.trim().slice(0, 600),
       website: f.website,
+      ...(invite ? { invite } : {}),
     };
     setBusy(true);
     setStatus({ text: "Sending…", err: false });
     try {
       const res = await fetch("/api/rsvp", {
-        method: hasReply ? "PUT" : "POST",
+        // An invite's reply is found by its code, so it can always be sent as new.
+        method: hasReply && !invite ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -133,8 +148,22 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
     }
   }
 
+  const seats = guest ? Math.min(guest.party_size, maxParty) : maxParty;
+  const greeting = guest && (
+    <div className="invite-hi">
+      <span className="eyebrow">Your invitation</span>
+      <h3>Dear {guest.name}</h3>
+      <p>
+        {guest.party_size === 1 ? "We've saved a seat for you." : `We've saved ${guest.party_size} seats for your party.`}
+      </p>
+    </div>
+  );
+  const emailBox = invite && canEmail ? <EmailMe invite={invite} /> : null;
+
   if (saved && !editing) {
     return (
+      <>
+      {greeting}
       <div className="done">
         <h3>{saved.attending ? "You're on the list" : "We'll miss you"}</h3>
         <p style={{ margin: 0 }}>
@@ -148,6 +177,8 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
           </button>
         )}
       </div>
+      {emailBox}
+      </>
     );
   }
 
@@ -163,6 +194,8 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
   const req = requireContact;
   const opt = req ? "" : " (optional)";
   return (
+    <>
+    {greeting}
     <form onSubmit={submit} noValidate>
       <div className="f">
         <label htmlFor="r-name">Your name(s)</label>
@@ -181,7 +214,7 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
         <div className="f">
           <label htmlFor="r-count">Number in your party</label>
           <select id="r-count" value={f.party} onChange={set("party")}>
-            {Array.from({ length: maxParty }, (_, i) => (
+            {Array.from({ length: seats }, (_, i) => (
               <option key={i}>{i + 1}</option>
             ))}
           </select>
@@ -241,6 +274,49 @@ export default function Rsvp({ meals, maxParty, deadline, requireContact, dateLa
       <div className={"status" + (status.err ? " err" : "")} role="status">
         {status.text}
       </div>
+    </form>
+    {emailBox}
+    </>
+  );
+}
+
+/** "Email me this invitation": sends the guest's own link to the address they type, nowhere else. */
+function EmailMe({ invite }: { invite: string }) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState({ text: "", err: false });
+  const [busy, setBusy] = useState(false);
+
+  async function send(e: FormEvent) {
+    e.preventDefault();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setStatus({ text: "That email doesn't look right.", err: true });
+      return;
+    }
+    setBusy(true);
+    setStatus({ text: "Sending…", err: false });
+    try {
+      const res = await fetch("/api/invite/email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ invite, email: email.trim() }),
+      });
+      const d = await res.json().catch(() => ({}));
+      setStatus(res.ok ? { text: `Sent to ${email.trim()}. Check your inbox.`, err: false } : { text: d.error ?? "That didn't go through. Try again.", err: true });
+    } catch {
+      setStatus({ text: "That didn't go through. Check your connection and try again.", err: true });
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <form className="email-me" onSubmit={send} noValidate>
+      <div className="f">
+        <label htmlFor="r-email">Want this invitation by email too?</label>
+        <input id="r-email" type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} maxLength={200} />
+      </div>
+      <button className="btn ghost" type="submit" disabled={busy}>Email it to me</button>
+      <div className={"status" + (status.err ? " err" : "")} role="status">{status.text}</div>
     </form>
   );
 }

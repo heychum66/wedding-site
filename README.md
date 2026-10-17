@@ -46,6 +46,17 @@ Privacy: the schema turns on **row level security** with no policies, so Supabas
 3. Deploy. Every push to `main` redeploys.
 4. Run `npm run migrate` once against the production `DATABASE_URL` if you haven't already.
 
+## Invitations (guest list, text invites, email)
+
+At `/admin`, under **Invitations**:
+
+1. **Import CSV.** Export your guest spreadsheet as CSV. Columns: `Name` (required, or `First name` + `Last name`), `Phone`, `Email`, `Party size`. Header names are matched loosely ("Cell", "# of guests" work). One row per person or per household. Importing again updates matching names (blank cells never erase saved info), so keep editing the spreadsheet and re-import.
+2. Each guest gets a private link (`/?i=<code>#rsvp`). It opens the site with "Dear <name>", fills in their name and phone, and limits the party to their seats. Their reply is tied to their row, so the list shows who has replied.
+3. **Text invite** (on a phone) opens Messages with their number and the invite text filled in; tap send. It's marked as texted. Guests without a phone get **Copy message** instead. **Download with links** gives a CSV of everyone's link for a mail merge.
+4. The text is `inviteText` in `content/site.ts` (`{name}` and `{link}` get filled in).
+
+**Email me this invitation:** guests can type their email on their invite page and the site emails them the invitation (only to the address they type). It stays hidden until `RESEND_API_KEY` and `EMAIL_FROM` are set in Vercel. Resend's free tier covers 3,000 emails a month, but it only sends to anyone once you verify a domain you own.
+
 ## Custom domain
 
 Vercel → your project → **Settings → Domains → Add**, type the domain, and follow the DNS instructions it shows (an `A` record for the apex domain, a `CNAME` for `www`). HTTPS is automatic. Then set `NEXT_PUBLIC_SITE_URL` to the new domain and redeploy so link previews use it.
@@ -54,9 +65,10 @@ Vercel → your project → **Settings → Domains → Add**, type the domain, a
 
 | What | File |
 | --- | --- |
-| Names, date, venue + address, RSVP deadline, meal options, hotel block, registry link, travel copy, FAQ, whether phone/address are required | `content/site.ts` |
+| Names, date, venue + address, RSVP deadline, meal options, invite text message, hotel block, registry link, travel copy, FAQ, whether phone/address are required | `content/site.ts` |
 | Wedding-day timeline for the live panel (times are placeholders) | `content/schedule.ts` |
 | Seating chart: fill in tables, then flip `READY` to `true` the week of the wedding | `content/seating.ts` |
+| The cats (drawn from photos of ours) | `components/Cats.tsx` |
 | Colors, type, animation | `app/globals.css` (ported from the prototype; token names like `--sapphire`, `--gold` are unchanged) |
 
 Commit and push; Vercel redeploys.

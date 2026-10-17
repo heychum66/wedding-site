@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, verifyAdminToken } from "@/lib/admin-auth";
+import { csvCell as cell } from "@/lib/csv";
 import { db, type RsvpRow } from "@/lib/db";
 
 const HEADERS = [
@@ -17,13 +18,6 @@ const HEADERS = [
   "Replied",
   "Updated",
 ];
-
-/** Quote for CSV, and defuse spreadsheet formulas (=, +, -, @) in guest-typed text. */
-function cell(v: unknown) {
-  let s = v == null ? "" : String(v);
-  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
-  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
 
 export async function GET() {
   // proxy.ts guards this route too; checking here keeps it safe if the matcher ever changes.

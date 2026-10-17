@@ -40,6 +40,13 @@ export const site = {
   /** RSVP asks for phone + mailing address. false = optional, true = guests must fill them in. */
   requireContact: false,
 
+  /**
+   * The text message behind each "Text invite" button at /admin. {name} becomes the guest's name
+   * as it appears in your spreadsheet, {link} their personal RSVP link.
+   */
+  inviteText:
+    "Hi {name}! Evan and Remy are getting married on September 18, 2027 in Pittsburgh, and we'd love for you to be there. Here's your invitation. Kindly RSVP by August 1: {link}",
+
   /** null shows "coming soon". Fill in like: { name: "Hotel Name", url: "https://…", code: "EVANREMY", bookBy: "August 15" } */
   hotelBlock: null as null | { name: string; url: string; code?: string; bookBy?: string },
 
