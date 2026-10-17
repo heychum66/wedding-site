@@ -84,6 +84,9 @@ function runner(c: Cat){
   </g></svg>`;
 }
 
+/** The grey tabby shows up half the time; the other two split the rest. */
+const pickCat = () => (Math.random() < 0.5 ? CATS[0] : CATS[1 + Math.floor(Math.random() * 2)]);
+
 const FIRST_PEEK_MS = 6500;
 const pickDelay = () => 10000 + Math.random() * 15000; // every 10–25s
 
@@ -144,7 +147,7 @@ export default function Cats() {
       timer = setTimeout(() => {
         // Only one cat on screen at a time, and none while the tab is hidden.
         if (!document.hidden && !stage.childElementCount) {
-          const c = CATS[Math.floor(Math.random() * CATS.length)];
+          const c = pickCat();
           (Math.random() < 0.62 ? peek : run)(c);
         }
         next();
