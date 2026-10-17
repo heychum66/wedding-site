@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
+import { EB_Garamond, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const bodoni = Bodoni_Moda({
+const garamond = EB_Garamond({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-bodoni",
+  variable: "--font-garamond",
   display: "swap",
 });
 
@@ -39,7 +38,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${bodoni.variable} ${hanken.variable}`}>
+    <html lang="en" className={`${garamond.variable} ${hanken.variable}`}>
       <body>
         <noscript>
           <style>{`.spray.wait .lf,.spray.wait .bry{transform:none}.spray.wait .stem{stroke-dashoffset:0}`}</style>
