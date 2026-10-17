@@ -22,6 +22,7 @@ const TILES = [
   { href: "/the-day", eyebrow: "Venue & schedule", title: "The day" },
   { href: "/attire", eyebrow: "What to wear", title: "Attire" },
   { href: "/travel", eyebrow: "Getting to Pittsburgh", title: "Travel" },
+  { href: "/registry", eyebrow: "If you'd like", title: "Registry" },
   { href: "/faq", eyebrow: "Good to know", title: "Questions" },
   { href: "/rsvp", eyebrow: site.rsvpDeadlineLabel, title: "RSVP" },
 ];

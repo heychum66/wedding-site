@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { faq } from "@/content/site";
 import NextTab from "@/components/NextTab";
 import SectionHead from "@/components/SectionHead";
@@ -17,7 +18,16 @@ export default function Faq() {
                 <h3>{item.q}</h3>
                 <p>
                   {item.a}
-                  {item.link ? <> <a href={item.link.href} target="_blank" rel="noopener">{item.link.label}</a></> : null}
+                  {item.link ? (
+                    <>
+                      {" "}
+                      {item.link.href.startsWith("/") ? (
+                        <Link href={item.link.href}>{item.link.label}</Link>
+                      ) : (
+                        <a href={item.link.href} target="_blank" rel="noopener">{item.link.label}</a>
+                      )}
+                    </>
+                  ) : null}
                 </p>
               </div>
             ))}

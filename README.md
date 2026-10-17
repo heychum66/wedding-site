@@ -71,7 +71,7 @@ Vercel → your project → **Settings → Domains → Add**, type the domain, a
 
 | What | File |
 | --- | --- |
-| Names, date, venue + address, RSVP deadline, meal options, invite text message, hotel block, registry link, travel copy, FAQ, whether phone/address are required | `content/site.ts` |
+| Names, date, venue + address, RSVP deadline, meal options, invite text message, hotel block, registry links, travel copy, FAQ, whether phone/address are required | `content/site.ts` |
 | Wedding-day timeline for the live panel (times are placeholders) | `content/schedule.ts` |
 | Seating chart: fill in tables, then flip `READY` to `true` the week of the wedding | `content/seating.ts` |
 | The cats (drawn from photos of ours) | `components/Cats.tsx` |
