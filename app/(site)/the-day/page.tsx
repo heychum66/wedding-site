@@ -3,6 +3,7 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import { dateLong } from "@/lib/dates";
 import { LiveOpenButton } from "@/components/LivePanel";
+import MapLinks from "@/components/MapLinks";
 import NextTab from "@/components/NextTab";
 import SeatFinder from "@/components/SeatFinder";
 import SectionHead from "@/components/SectionHead";
@@ -27,7 +28,7 @@ export default function TheDay() {
               <address>{ceremony.street}<br />{ceremony.city}, {ceremony.region} {ceremony.zip}</address>
               <p className="area">{ceremony.area}</p>
               <div className="when"><span>Time</span>{ceremony.time}</div>
-              <a className="btn" href={ceremony.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
+              <MapLinks place={ceremony} />
             </li>
             <li className="between" aria-label="Getting there">
               <span className="dot" aria-hidden="true" />
@@ -48,7 +49,7 @@ export default function TheDay() {
                   </div>
                 ))}
               </div>
-              <a className="btn" href={reception.mapsUrl} target="_blank" rel="noopener">Open in Maps</a>
+              <MapLinks place={reception} />
             </li>
           </ol>
           <div className="day-foot">

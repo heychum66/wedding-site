@@ -30,7 +30,6 @@ export const site = {
     zip: "15222",
     area: "In the Strip District",
     time: "TBD",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=St.+Stanislaus+Kostka+Church+57+21st+St+Pittsburgh+PA",
   },
   /** Then: cocktails, dinner and dancing. */
   reception: {
@@ -41,7 +40,6 @@ export const site = {
     region: "PA",
     zip: "15235",
     area: "In Churchill, just east of the city",
-    mapsUrl: "https://www.google.com/maps/search/?api=1&query=Edgewood+Country+Club+100+Churchill+Rd+Pittsburgh+PA",
     /** Rows on The Day tab. */
     schedule: [
       { t: "TBD", what: "Cocktail hour", note: "Drinks and hors d'oeuvres." },
