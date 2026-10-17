@@ -84,7 +84,7 @@ export default function AdminGuests({
 
   // Links use the address you're on (the server render has none, so they fill in after load).
   const origin = useSyncExternalStore(noSubscribe, browserOrigin, () => "");
-  const link = (g: GuestListRow) => `${origin}/?i=${g.invite_token}#rsvp`;
+  const link = (g: GuestListRow) => `${origin}/rsvp?i=${g.invite_token}`;
   const message = (g: GuestListRow) =>
     inviteText.replaceAll("{first}", g.first_name || g.name).replaceAll("{name}", g.name).replaceAll("{link}", link(g));
 

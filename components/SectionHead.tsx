@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
 /** Section title block with the leafy flourish underneath (the prototype injected it into every .shead). */
-export default function SectionHead({ num, eyebrow, children }: { num: string; eyebrow: ReactNode; children: ReactNode }) {
+export default function SectionHead({ num, eyebrow, children }: { num?: string; eyebrow: ReactNode; children: ReactNode }) {
   return (
     <div className="shead">
-      <span className="span">{num}</span>
+      {num && <span className="span">{num}</span>}
       <span className="eyebrow">{eyebrow}</span>
       <h2>{children}</h2>
       <LeafRule />

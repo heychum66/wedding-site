@@ -84,7 +84,7 @@ export type Faq = { q: string; a: string; link?: Link };
 export const faq: Faq[] = [
   {
     q: "What should I wear?",
-    a: "Formal attire (see the guide above). Suits and ties for the gentlemen; dresses that fall below the knee, or other formal wear, for the ladies. September evenings in Pittsburgh can cool off, so a wrap is a good idea.",
+    a: "Formal attire (see the Attire tab). Suits and ties for the gentlemen; dresses that fall below the knee, or other formal wear, for the ladies. September evenings in Pittsburgh can cool off, so a wrap is a good idea.",
   },
   {
     q: "Can I bring a plus-one?",

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { site } from "@/content/site";
 import { LIVE_WINDOW, PREVIEW, SCHEDULE } from "@/content/schedule";
@@ -140,8 +141,9 @@ export default function LivePanel() {
 
 export function LiveOpenButton() {
   return (
-    <button className="linkish" type="button" onClick={() => dispatchEvent(new Event(LIVE_OPEN_EVENT))}>
+    // The panel lives on the home tab and opens itself for #live-preview.
+    <Link className="linkish" href="/#live-preview">
       Preview the wedding-day view
-    </button>
+    </Link>
   );
 }

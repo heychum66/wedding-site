@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
-/** Starts each greenery spray's draw-in animation the first time it scrolls into view. */
+/** Starts each greenery spray's draw-in animation the first time it scrolls into view (again on each tab). */
 export default function SprayAnimator() {
+  const path = usePathname();
   useEffect(() => {
     const els = document.querySelectorAll<HTMLElement>("[data-spray].wait");
     if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
@@ -23,6 +25,6 @@ export default function SprayAnimator() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [path]);
   return null;
 }
