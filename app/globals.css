@@ -520,7 +520,7 @@ body{margin:0}
 
 /* ===== registry ===== */
 .registry-intro{max-width:52ch;margin:0 auto 34px;text-align:center;color:var(--ink-soft);font:italic 400 1.25rem/1.5 var(--display)}
-.registries{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;max-width:900px}
+.registries{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,380px));justify-content:center;gap:16px}
 .registries .tcard,.registries-soon{display:grid;gap:10px;justify-items:center;text-align:center;padding:32px 26px}
 .registries h3,.registries-soon h3{font:400 1.8rem/1.1 var(--display);margin:0}
 .registries .btn{margin-top:8px}
