@@ -113,10 +113,6 @@ section.s{padding-block:clamp(64px,10vw,120px)}
 .travel p{margin:0 0 12px;color:var(--ink-soft)}
 .dist{font:400 3.2rem/1 var(--display);font-variant-numeric:lining-nums;margin-bottom:6px}
 .dist small{display:block;font:400 .9rem var(--body);color:var(--ink-soft);margin-top:8px;letter-spacing:.02em}
-.todo-list{list-style:none;margin:0;padding:0}
-.todo-list li{padding-block:11px;border-bottom:1px solid var(--line);display:flex;gap:12px;color:var(--ink-soft)}
-.todo-list li:first-child{padding-top:0}
-.todo-list li::before{content:"";width:6px;height:6px;margin-top:10px;flex:none;border:1px solid var(--gold);transform:rotate(45deg)}
 @media (max-width:860px){.travel{grid-template-columns:1fr}}
 
 /* rsvp */
@@ -207,8 +203,6 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .76rem var(--body);lette
 .btn:hover::after{transform:translateX(120%)}
 .venue{transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
 .venue:hover{transform:translateY(-4px);box-shadow:0 34px 60px -30px rgba(22,61,140,.35)}
-.todo-list li{transition:color .3s,padding-left .3s}
-.todo-list li:hover{color:var(--ink);padding-left:6px}
 @supports (animation-timeline: view()){
   @keyframes reveal{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
   @keyframes hair{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -507,14 +501,12 @@ body{margin:0}
   .between p{max-width:30ch}
 }
 
-/* Travel: four short cards, then the weekend list. */
+/* Travel: four short cards. */
 .tcard{border:1px solid var(--line);background:var(--white);padding:26px 24px}
 .tcard p:last-child{margin-bottom:0}
 .facts{margin:0;display:grid;gap:14px}
 .facts dt{font:400 1.2rem/1.2 var(--display);color:var(--ink)}
 .facts dd{margin:4px 0 0;color:var(--ink-soft)}
-.weekend{max-width:640px;margin:clamp(40px,6vw,64px) auto 0}
-.weekend h3{font:500 .8rem var(--body);letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;text-align:center}
 @media (max-width:520px){.maps{gap:6px}.maps .btn{padding:10px 4px;font-size:.62rem;letter-spacing:.08em}}
 @media (max-width:360px){.maps{grid-template-columns:1fr;max-width:220px}}
 
