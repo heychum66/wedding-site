@@ -33,7 +33,6 @@ export default function Home() {
             E<span>&amp;</span>R
           </div>
           <ul>
-            <li><a href="#story">Story</a></li>
             <li><a href="#details">The Day</a></li>
             <li><a href="#attire">Attire</a></li>
             <li><a href="#seat">Your seat</a></li>
@@ -71,25 +70,9 @@ export default function Home() {
 
       <Countdown target={site.ceremonyStart} />
 
-      <section className="s" id="story">
-        <div className="wrap">
-          <SectionHead num="I." eyebrow="How we got here">Our <em>story</em></SectionHead>
-          <div className="story">
-            <div className="beat">
-              <div className="when">The question<small>Dublin, Ohio</small></div>
-              <div><h3>The proposal</h3><p>Evan asked at Bridge Park in Dublin, Ohio, overlooking the Scioto River. Remy said yes.</p></div>
-            </div>
-            <div className="beat">
-              <div className="when">The big day<small>September 18, 2027</small></div>
-              <div><h3>The wedding</h3><p>We&apos;re getting married at Edgewood Country Club with about 150 of our favorite people. We&apos;d love for you to be one of them.</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section className="s" id="details">
         <div className="wrap">
-          <SectionHead num="II." eyebrow={dateLong}>The <em>day</em></SectionHead>
+          <SectionHead num="I." eyebrow={dateLong}>The <em>day</em></SectionHead>
           <div className="details">
             <div className="venue">
               <Spray corner="tl" preset="card" index={4} />
@@ -117,21 +100,21 @@ export default function Home() {
 
       <section className="s" id="attire">
         <div className="wrap">
-          <SectionHead num="III." eyebrow="What to wear">Black <em>tie</em></SectionHead>
+          <SectionHead num="II." eyebrow="What to wear">Black <em>tie</em></SectionHead>
           <DressUp />
         </div>
       </section>
 
       <section className="s" id="seat" style={{ background: "var(--paper)", borderBlock: "1px solid var(--line)" }}>
         <div className="wrap">
-          <SectionHead num="IV." eyebrow="For the reception">Find your <em>seat</em></SectionHead>
+          <SectionHead num="III." eyebrow="For the reception">Find your <em>seat</em></SectionHead>
           <SeatFinder />
         </div>
       </section>
 
       <section className="s" id="travel">
         <div className="wrap">
-          <SectionHead num="V." eyebrow="Getting to Pittsburgh">Travel <em>&amp; stays</em></SectionHead>
+          <SectionHead num="IV." eyebrow="Getting to Pittsburgh">Travel <em>&amp; stays</em></SectionHead>
           <div className="travel">
             <div>
               <h3>{travel.flying.heading}</h3>
@@ -167,7 +150,7 @@ export default function Home() {
         <Spray corner="br" preset="band" tone="light" index={6} />
         <Spray corner="tl" preset="band" tone="light" seed={3} index={7} />
         <div className="wrap">
-          <SectionHead num="VI." eyebrow={site.rsvpDeadlineLabel}>Kindly <em>reply</em></SectionHead>
+          <SectionHead num="V." eyebrow={site.rsvpDeadlineLabel}>Kindly <em>reply</em></SectionHead>
           <div className="rsvp">
             <div className="pitch">
               <p>Tell us you&apos;re coming, pick your dinner, and request the song that gets you on the dance floor.</p>
@@ -188,7 +171,7 @@ export default function Home() {
 
       <section className="s" id="faq">
         <div className="wrap">
-          <SectionHead num="VII." eyebrow="Good to know">Questions</SectionHead>
+          <SectionHead num="VI." eyebrow="Good to know">Questions</SectionHead>
           <div className="faq">
             {faq.map((item) => (
               <details key={item.q}>

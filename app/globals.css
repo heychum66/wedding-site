@@ -73,17 +73,6 @@ section.s{padding-block:clamp(64px,10vw,120px)}
 .shead h2 em{font-style:italic;color:var(--emerald)}
 .shead::after{content:"";width:60px;height:1px;background:var(--gold);margin-top:6px}
 
-/* story */
-.story{display:grid;max-width:860px;margin:0 auto}
-.beat{display:grid;grid-template-columns:200px 1fr;gap:28px;padding-block:30px;border-top:1px solid var(--line)}
-.beat:last-child{border-bottom:1px solid var(--line)}
-.beat .when{font:500 .74rem/1.5 var(--body);letter-spacing:.28em;text-transform:uppercase;color:var(--gold)}
-.beat .when small{display:block;letter-spacing:.06em;text-transform:none;color:var(--ink-soft);font-weight:300;font-size:.92rem;margin-top:6px}
-.beat h3{font:italic 400 2rem/1.15 var(--display);margin-bottom:10px}
-.beat p{margin:0;max-width:60ch;color:var(--ink-soft)}
-.beat.todo h3,.beat.todo p{opacity:.7}
-.beat.todo .tag{display:inline-block;font:500 .62rem var(--body);letter-spacing:.24em;text-transform:uppercase;border:1px dashed var(--ink-soft);color:var(--ink-soft);padding:3px 9px;margin-bottom:10px}
-@media (max-width:620px){.beat{grid-template-columns:1fr;gap:8px}}
 
 /* details */
 .details{display:grid;grid-template-columns:1.15fr 1fr;gap:40px}
@@ -213,9 +202,8 @@ footer p{color:var(--ink-soft);margin-top:18px;font:500 .7rem var(--body);letter
 @supports (animation-timeline: view()){
   @keyframes reveal{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
   @keyframes hair{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-  .shead h2,.shead .eyebrow,.beat,.venue,.row,.travel>div,.faq details,.rsvp>*,.count .ticks,footer .big{animation:reveal linear both;animation-timeline:view();animation-range:entry 5% entry 45%}
+  .shead h2,.shead .eyebrow,.venue,.row,.travel>div,.faq details,.rsvp>*,.count .ticks,footer .big{animation:reveal linear both;animation-timeline:view();animation-range:entry 5% entry 45%}
   .shead::after{animation:hair linear both;animation-timeline:view();animation-range:entry 20% entry 60%}
-  .beat{animation-range:entry 0% entry 40%}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
