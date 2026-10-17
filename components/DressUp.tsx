@@ -127,7 +127,7 @@ export default function DressUp() {
     <>
       <p className="no-white">
         <span>One rule</span>
-        Please do not wear white&hellip; <em>or else.</em>
+        Please do not wear white&hellip; or else.
       </p>
       <div className="dress">
         {card("him", HIM_SVG, "A figure being dressed in a suit and tie", "For him", "Suit and tie")}

@@ -10,7 +10,7 @@ export default function LoginPage() {
       <div className="wrap login">
         <div className="shead" style={{ marginBottom: 0 }}>
           <span className="eyebrow">For Evan &amp; Remy</span>
-          <h2>Guest <em>list</em></h2>
+          <h2>Guest list</h2>
           <LeafRule />
         </div>
         <AdminLogin />

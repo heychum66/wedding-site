@@ -79,7 +79,7 @@ export default function LivePanel() {
     tag = "Today's the day";
     title = (
       <>
-        Starting <em>soon</em>
+        Starting soon
       </>
     );
     note = `Guests arrive at ${fmt(starts[0])}.`;

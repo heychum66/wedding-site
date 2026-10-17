@@ -18,7 +18,7 @@ export default function TheDay() {
     <>
       <section className="s" id="details">
         <div className="wrap">
-          <SectionHead eyebrow={dateLong}>The <em>day</em></SectionHead>
+          <SectionHead eyebrow={dateLong}>The day</SectionHead>
           <ol className="stops">
             <li className="venue">
               <Spray corner="tl" preset="card" index={4} />
@@ -63,7 +63,7 @@ export default function TheDay() {
 
       <section className="s" id="seat" style={{ background: "var(--paper)", borderBlock: "1px solid var(--line)" }}>
         <div className="wrap">
-          <SectionHead eyebrow="For the reception">Find your <em>seat</em></SectionHead>
+          <SectionHead eyebrow="For the reception">Find your seat</SectionHead>
           <SeatFinder />
         </div>
       </section>

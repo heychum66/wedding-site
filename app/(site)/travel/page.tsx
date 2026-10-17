@@ -12,7 +12,7 @@ export default function Travel() {
     <>
       <section className="s" id="travel">
         <div className="wrap">
-          <SectionHead eyebrow="Getting to Pittsburgh">Travel <em>&amp; stays</em></SectionHead>
+          <SectionHead eyebrow="Getting to Pittsburgh">Travel &amp; stays</SectionHead>
           <div className="travel">
             <div className="tcard">
               <h3>{travel.flying.heading}</h3>

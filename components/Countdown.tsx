@@ -52,7 +52,7 @@ export default function Countdown({ target }: { target: string }) {
     <div className="count" aria-live="polite">
       <div className="wrap">
         <div className="label">
-          Until we say <b>I do</b>
+          Until we say I do
         </div>
         <div className="ticks">
           {UNITS.map(([k, u]) => (
